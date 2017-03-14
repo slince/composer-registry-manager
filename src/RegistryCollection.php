@@ -34,6 +34,19 @@ class RegistryCollection implements \IteratorAggregate,\ArrayAccess
     }
 
     /**
+     * Add a registry
+     * @param Registry $registry
+     */
+    public function remove(Registry $registry)
+    {
+        foreach ($this->registries as $index => $_registry) {
+            if ($registry == $_registry) {
+                unset($this->registries[$index]);
+            }
+        }
+    }
+
+    /**
      * Get all registries
      * @return Registry[]
      */

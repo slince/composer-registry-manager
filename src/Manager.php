@@ -7,6 +7,7 @@ namespace Slince\Crm;
 
 use Slince\Crm\Exception\InvalidArgumentException;
 use Slince\Crm\Exception\RegistryNotExistsException;
+use Slince\Crm\Exception\RuntimeException;
 
 class Manager
 {
@@ -43,10 +44,10 @@ class Manager
      * Dump all registries to file
      * @param $file
      */
-    public function dumpRepositories($file)
+    public function dumpRepositoriesToFile($file)
     {
         $registries = $this->registries->toArray();
-        Utils::getFilesystem()->dumpFile($file, json_encode($registries));
+        Utils::getFilesystem()->dumpFile($file, json_encode($registries, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     /**
@@ -59,37 +60,37 @@ class Manager
 
     /**
      * Add one registry
-     * @param $name
-     * @param $url
+     * @param string $name
+     * @param string $url
+     * @throws InvalidArgumentException
+     * @return Registry
      */
     public function addRegistry($name, $url)
     {
-        $registry = Registry::create([
-            'name' => $name,
-            'url' => $url
-        ]);
-        $this->registries->add($registry);
+        try {
+            $this->findRegistry($name);
+            throw new InvalidArgumentException(sprintf("Registry [%s] already exists", $name));
+        } catch (RegistryNotExistsException $exception) {
+            $registry = Registry::create([
+                'name' => $name,
+                'url' => $url
+            ]);
+            $this->registries->add($registry);
+        }
+        return $registry;
     }
 
     /**
-     * Make change registry command string
-     * @param $name
-     * @return string
+     * Remove registry
+     * @param string $name
      */
-    public function makeChangeRegistryCommand($name)
+    public function removeRegistry($name)
     {
-        $command = "composer config -g repo.packagist composer %s";
-        $registryUrl = $this->findRegistry($name)->getUrl();
-        return sprintf($command, $registryUrl);
-    }
-
-    /**
-     *  Make view registry command string
-     * @return string
-     */
-    public function makeViewCurrentRegistryCommand()
-    {
-        return "composer config -g repo.packagist";
+        try {
+            $registry = $this->findRegistry($name);
+            $this->registries->remove($registry);
+        } catch (RegistryNotExistsException $exception) {
+        }
     }
 
     /**
@@ -98,14 +99,68 @@ class Manager
      * @return Registry
      * @throws RegistryNotExistsException
      */
-    protected function findRegistry($name)
+    public function findRegistry($name)
     {
-        $targetRegistry = null;
-        foreach ($this->registries as $registryName => $registry) {
-            if (strcasecmp($name, $registryName) == 0) {
+        foreach ($this->registries as $registry) {
+            if (strcasecmp($name, $registry->getName()) == 0) {
                 return $registry;
             }
         }
         throw new RegistryNotExistsException($name);
+    }
+
+    /**
+     * Use Registry
+     * @param Registry $registry
+     * @return void
+     */
+    public function useRegistry(Registry $registry)
+    {
+        $command = $this->makeUseRegistryCommand($registry);
+        $this->runSystemCommand($command);
+    }
+
+    /**
+     * Get Current Registry
+     * @throws RuntimeException
+     * @return Registry
+     */
+    public function getCurrentRegistry()
+    {
+        $rawOutput = $this->runSystemCommand("composer config -g repo.packagist");
+        $registryData = json_decode($rawOutput, true);
+        if (json_last_error()) {
+            throw new RuntimeException(sprintf("Can not find current registry, error: %s", json_last_error_msg()));
+        }
+        foreach ($this->registries as $registry) {
+            if (strcasecmp($registry->getUrl(), $registryData['url']) == 0) {
+                return $registry;
+            }
+        }
+        return Registry::create([
+            'url' => $registryData['url'],
+            'name' => 'unknow'
+        ]);
+    }
+
+    /**
+     * Make change registry command string
+     * @param Registry $registry
+     * @return string
+     */
+    protected function makeUseRegistryCommand(Registry $registry)
+    {
+        $command = "composer config -g repo.packagist composer %s";
+        return sprintf($command, $registry->getUrl());
+    }
+
+    /**
+     * Run command
+     * @param $command
+     * @return string
+     */
+    protected function runSystemCommand($command)
+    {
+        return exec($command);
     }
 }

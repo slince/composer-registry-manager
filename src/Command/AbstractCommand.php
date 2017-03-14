@@ -38,8 +38,21 @@ class AbstractCommand  extends Command implements CommandInterface
         return $this->manager;
     }
 
+    /**
+     * Get config json file
+     * @return string
+     */
     protected function getRepositoriesConfigFile()
     {
         return __DIR__ . '/../../crm.json';
+    }
+
+    /**
+     * Get default config json file
+     * @return string
+     */
+    protected function getDefaultRepositoriesConfigFile()
+    {
+        return __DIR__ . '/../../crm.default.json';
     }
 }

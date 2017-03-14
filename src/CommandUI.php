@@ -5,7 +5,11 @@
  */
 namespace Slince\Crm;
 
-use Slince\Crm\Command\ListRegistryCommand;
+use Slince\Crm\Command\AddCommand;
+use Slince\Crm\Command\ListCommand;
+use Slince\Crm\Command\RemoveCommand;
+use Slince\Crm\Command\ResetCommand;
+use Slince\Crm\Command\UseCommand;
 use Symfony\Component\Console\Application;
 
 class CommandUI
@@ -18,7 +22,11 @@ class CommandUI
     {
         $manager = new Manager();
         return [
-            new ListRegistryCommand($manager),
+            new ListCommand($manager),
+            new UseCommand($manager),
+            new AddCommand($manager),
+            new RemoveCommand($manager),
+            new ResetCommand($manager),
         ];
     }
 

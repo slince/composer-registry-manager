@@ -5,13 +5,12 @@
  */
 namespace Slince\Crm\Command;
 
-use Slince\Crm\Exception\RuntimeException;
 use Slince\Crm\Registry;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ListRegistryCommand extends AbstractCommand
+class ListCommand extends AbstractCommand
 {
     /**
      * Command name
@@ -19,20 +18,26 @@ class ListRegistryCommand extends AbstractCommand
      */
     const NAME = 'ls';
 
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this->setName(static::NAME)
             ->setDescription("List all available registries");
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $currentRegistryUrl = $this->findCurrentRegistryUrl();
+        $currentRegistry = $this->getManager()->getCurrentRegistry();
         $registries = $this->getManager()->getRegistries();
 
         //find all registry records
-        $rows = array_map(function(Registry $registry) use ($currentRegistryUrl){
-            if ($currentRegistryUrl == $registry->getUrl()) {
+        $rows = array_map(function(Registry $registry) use ($currentRegistry){
+            if ($currentRegistry == $registry) {
                 return [
                     '<info>*</info>',
                     "<info>{$registry->getName()}</info>",
@@ -62,19 +67,5 @@ class ListRegistryCommand extends AbstractCommand
 
         $output->write(PHP_EOL);
         $table->render();
-    }
-
-    /**
-     * Get current registry url
-     * @return string
-     */
-    protected function findCurrentRegistryUrl()
-    {
-        $rawOutput = exec($this->getManager()->makeViewCurrentRegistryCommand());
-        $registry = json_decode($rawOutput, true);
-        if (json_last_error()) {
-            throw new RuntimeException(sprintf("Can not find current registry, error: %s", json_last_error_msg()));
-        }
-        return $registry['url'];
     }
 }
