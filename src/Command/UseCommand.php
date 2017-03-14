@@ -36,7 +36,6 @@ class UseCommand extends Command
         $registry = $this->getManager()->findRegistry($registryName);
         $this->getManager()->useRegistry($registry);
 
-        $output->write(PHP_EOL);
         $output->writeln("<info>Use registry [{$registryName}] success</info>");
     }
 }

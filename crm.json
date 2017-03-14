@@ -1,14 +1,20 @@
 [
     {
         "name": "composer",
-        "url": "https://packagist.org"
+        "url": "https://packagist.org",
+        "homepage": "",
+        "author": ""
     },
     {
         "name": "phpcomposer",
-        "url": "https://packagist.phpcomposer.com"
+        "url": "https://packagist.phpcomposer.com",
+        "homepage": "",
+        "author": ""
     },
-        {
+    {
         "name": "composer-proxy",
-        "url": "https://packagist.composer-proxy.org"
+        "url": "https://packagist.composer-proxy.org",
+        "homepage": "",
+        "author": ""
     }
 ]

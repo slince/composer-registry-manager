@@ -37,7 +37,6 @@ class RemoveCommand extends Command
         $this->getManager()->removeRegistry($registryName);
         $this->getManager()->dumpRepositoriesToFile($this->getRepositoriesConfigFile());
 
-        $output->write(PHP_EOL);
         $output->writeln("<info>Remove registry [{$registryName}] success</info>");
     }
 }

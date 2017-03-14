@@ -39,7 +39,6 @@ class AddCommand extends Command
         $this->getManager()->addRegistry($registryName, $registryUrl);
         $this->getManager()->dumpRepositoriesToFile($this->getRepositoriesConfigFile());
 
-        $output->write(PHP_EOL);
         $output->writeln("<info>Add registry [{$registryName}] success</info>");
     }
 }

@@ -40,7 +40,6 @@ class ResetCommand extends Command
         $filesystem = Utils::getFilesystem();
         $filesystem->copy($this->getDefaultRepositoriesConfigFile(), $this->getRepositoriesConfigFile(), true);
 
-        $output->write(PHP_EOL);
         $output->writeln("<info>Reset registry configurations success</info>");
     }
 }

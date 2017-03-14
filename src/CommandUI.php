@@ -10,7 +10,7 @@ use Slince\Crm\Command\ListCommand;
 use Slince\Crm\Command\RemoveCommand;
 use Slince\Crm\Command\ResetCommand;
 use Slince\Crm\Command\UseCommand;
-use Symfony\Component\Console\Application;
+use Slince\Crm\Console\Application;
 
 class CommandUI
 {

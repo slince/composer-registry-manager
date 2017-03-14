@@ -64,8 +64,6 @@ class ListCommand extends Command
         $table = new Table($output);
         $table->setRows($rows);
         $table->setStyle('compact');
-
-        $output->write(PHP_EOL);
         $table->render();
     }
 }
