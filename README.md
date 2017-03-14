@@ -1,4 +1,4 @@
-# crm -- composer registry manager
+# CRM - Composer Registry Manager
 
 [![Build Status](https://img.shields.io/travis/slince/crm/master.svg?style=flat-square)](https://travis-ci.org/slince/crm)
 [![Coverage Status](https://img.shields.io/codecov/c/github/slince/crm.svg?style=flat-square)](https://codecov.io/github/slince/crm)
