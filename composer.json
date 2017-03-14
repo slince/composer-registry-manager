@@ -1,7 +1,7 @@
 {
     "name": "slince/crm",
     "description": "Composer registry manager",
-    "type": "library",
+    "type": "project",
     "license": "Apache-2.0",
     "authors": [
         {

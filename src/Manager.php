@@ -118,7 +118,7 @@ class Manager
      */
     public function getCurrentRegistry()
     {
-        $rawOutput = $this->runSystemCommand("composer config -g repo.packagist");
+        $rawOutput = $this->runSystemCommand("composer config -g repo.packagist.org");
         $registryData = json_decode($rawOutput, true);
         if (json_last_error()) {
             throw new RuntimeException(sprintf("Can not find current registry, error: %s", json_last_error_msg()));
@@ -130,7 +130,7 @@ class Manager
         }
         return Registry::create([
             'url' => $registryData['url'],
-            'name' => 'unknow'
+            'name' => 'unknown'
         ]);
     }
 
