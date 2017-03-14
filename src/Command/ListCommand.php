@@ -36,7 +36,7 @@ class ListCommand extends Command
         $registries = $this->getManager()->getRegistries();
 
         //find all registry records
-        $rows = array_map(function(Registry $registry) use ($currentRegistry){
+        $rows = array_map(function (Registry $registry) use ($currentRegistry) {
             if ($currentRegistry == $registry) {
                 return [
                     '<info>*</info>',

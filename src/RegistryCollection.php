@@ -7,7 +7,7 @@ namespace Slince\Crm;
 
 use Slince\Crm\Exception\InvalidArgumentException;
 
-class RegistryCollection implements \IteratorAggregate,\ArrayAccess
+class RegistryCollection implements \IteratorAggregate, \ArrayAccess
 {
 
     /**
@@ -61,7 +61,7 @@ class RegistryCollection implements \IteratorAggregate,\ArrayAccess
      */
     public function toArray()
     {
-        return array_map(function(Registry $registry){
+        return array_map(function (Registry $registry) {
             return $registry->toArray();
         }, $this->registries);
     }
@@ -73,7 +73,7 @@ class RegistryCollection implements \IteratorAggregate,\ArrayAccess
      */
     public static function createFromArray($data)
     {
-        return new static(array_map(function($registryData){
+        return new static(array_map(function ($registryData) {
             return Registry::create($registryData);
         }, $data));
     }
