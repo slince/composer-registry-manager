@@ -6,9 +6,9 @@
 namespace Slince\Crm\Command;
 
 use Slince\Crm\Manager;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\Command as BaseCommand;
 
-class AbstractCommand  extends Command implements CommandInterface
+class Command extends BaseCommand implements CommandInterface
 {
     /**
      * @var Manager
@@ -42,7 +42,7 @@ class AbstractCommand  extends Command implements CommandInterface
      * Get config json file
      * @return string
      */
-    protected function getRepositoriesConfigFile()
+    public function getRepositoriesConfigFile()
     {
         return __DIR__ . '/../../crm.json';
     }
@@ -51,7 +51,7 @@ class AbstractCommand  extends Command implements CommandInterface
      * Get default config json file
      * @return string
      */
-    protected function getDefaultRepositoriesConfigFile()
+    public function getDefaultRepositoriesConfigFile()
     {
         return __DIR__ . '/../../crm.default.json';
     }

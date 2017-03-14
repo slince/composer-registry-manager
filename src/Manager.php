@@ -28,16 +28,7 @@ class Manager
      */
     public function readRegistriesFromFile($file)
     {
-        if (!is_file($file)) {
-            throw new InvalidArgumentException(sprintf("File [%s] does not exists", $file));
-        }
-        $content = @file_get_contents($file);
-        $registriesData = json_decode($content, true);
-        if (json_last_error()) {
-            $errorMessage = json_last_error_msg();
-            throw new InvalidArgumentException(sprintf("File [%s] must contain valid json, error: %s", $file, $errorMessage));
-        }
-        $this->registries = RegistryCollection::createFromArray($registriesData);
+        $this->registries = RegistryCollection::createFromArray(Utils::readJsonFile($file));
     }
 
     /**
