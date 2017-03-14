@@ -2,10 +2,8 @@
 namespace Slince\Crm\Tests\Command;
 
 use Slince\Crm\Command\AddCommand;
-use Slince\Crm\Command\ListCommand;
 use Slince\Crm\Command\UseCommand;
 use Slince\Crm\Manager;
-use Slince\Crm\Registry;
 use Symfony\Component\Console\Exception\RuntimeException;
 
 class UseCommandTest extends CommandTestCase
@@ -29,14 +27,5 @@ class UseCommandTest extends CommandTestCase
         $manager = new Manager();
         $this->setExpectedException(RuntimeException::class);
         $this->runCommandTester(new UseCommand($manager), []);
-    }
-
-    public function tearDown()
-    {
-        $manager = new Manager();
-        $manager->useRegistry(Registry::create([
-            'name' => 'composer',
-            'url' => 'https://packagist.org'
-        ]));
     }
 }
