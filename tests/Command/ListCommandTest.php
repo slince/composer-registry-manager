@@ -8,8 +8,6 @@ class ListCommandTest extends CommandTestCase
 {
     public function testExecute()
     {
-        $display = $this->runCommandTester(new ListCommand(new Manager()));
-        var_dump($display);
-        exit;
+        $this->assertRegExp('#packagist\.org#', $this->runCommandTester(new ListCommand(new Manager()), []));
     }
 }

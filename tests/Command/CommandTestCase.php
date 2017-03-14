@@ -6,10 +6,15 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class CommandTestCase extends \PHPUnit_Framework_TestCase
 {
-    protected function runCommandTester(Command $command)
+    protected function createCommandTester(Command $command)
+    {
+        return new CommandTester($command);
+    }
+
+    protected function runCommandTester(Command $command, $arguments, $options = [])
     {
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array('command' => $command->getName()), array('decorated' => false));
+        $commandTester->execute($arguments, $options);
         return $commandTester->getDisplay();
     }
 }

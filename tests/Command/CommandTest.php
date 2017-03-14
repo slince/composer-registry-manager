@@ -9,7 +9,7 @@ class CommandTest extends \PHPUnit_Framework_TestCase
     protected function createCommand()
     {
         $manager = new Manager();
-        return new Command($manager);
+        return new Command($manager, 'foo');
     }
 
     public function testGetManager()

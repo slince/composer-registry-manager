@@ -64,7 +64,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testReadRegistriesFromFile()
     {
-        $configFile = __DIR__ . '/../../crm.default.json';
+        $configFile = __DIR__ . '/../crm.default.json';
         $manager = new Manager();
         $manager->readRegistriesFromFile($configFile);
         $this->assertNotEmpty($manager->getRegistries()->all());
