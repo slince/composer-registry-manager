@@ -12,8 +12,6 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.5.9",
-        "slince/event": "*",
-        "slince/config": "*",
         "symfony/filesystem": "~3.0",
         "symfony/console": "~3.0"
     },
