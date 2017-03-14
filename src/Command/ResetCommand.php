@@ -32,7 +32,8 @@ class ResetCommand extends AbstractCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $question = new ConfirmationQuestion("Confirm to reset repository configurations", false);
+        $question = new ConfirmationQuestion("Confirm to reset repository configurations? ", false);
+        $output->write(PHP_EOL);
         if (!$this->getHelper('question')->ask($input, $output, $question)) {
             return;
         }
