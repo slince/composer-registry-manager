@@ -1,0 +1,14 @@
+[
+    {
+        "name": "composer",
+        "url": "https://packagist.org"
+    },
+    {
+        "name": "phpcomposer",
+        "url": "https://packagist.phpcomposer.com"
+    },
+        {
+        "name": "composer-proxy",
+        "url": "https://packagist.composer-proxy.org"
+    }
+]
