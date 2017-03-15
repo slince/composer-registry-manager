@@ -8,6 +8,7 @@ namespace Slince\Crm\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class UseCommand extends Command
 {
@@ -24,7 +25,7 @@ class UseCommand extends Command
     {
         $this->setName(static::NAME)
             ->setDescription('Change current registry to registry')
-            ->addArgument('registry-name', InputArgument::REQUIRED, 'The registry name you want use');
+            ->addArgument('registry-name', InputArgument::OPTIONAL, 'The registry name you want use');
     }
 
     /**
@@ -33,6 +34,20 @@ class UseCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $registryName = $input->getArgument('registry-name');
+        //auto select
+        if (is_null($registryName)) {
+            $helper = $this->getHelper('question');
+            $question = new ChoiceQuestion(
+                'Please select your favorite registry (defaults to composer)',
+                array_map(function($v){
+                    return $v['name'];
+                }, $this->getManager()->getRegistries()->toArray()),
+                0
+            );
+            $question->setErrorMessage('Registry %s is invalid.');
+            $registryName = $helper->ask($input, $output, $question);
+        }
+
         $registry = $this->getManager()->findRegistry($registryName);
         $this->getManager()->useRegistry($registry);
 
