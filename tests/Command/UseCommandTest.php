@@ -26,6 +26,13 @@ class UseCommandTest extends CommandTestCase
     public function testExecuteWithoutArgumentsAndInput()
     {
         $commandTester = $this->createCommandTester();
+
+        //If the symfony/console version is less than 3.2, the test is not performed
+        if (!method_exists($commandTester, 'setInputs')) {
+            return;
+        }
+
+        $commandTester->setInputs([PHP_EOL]);
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
         $this->assertContains('Please select your favorite registry', $display);
