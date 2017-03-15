@@ -21,11 +21,4 @@ class UseCommandTest extends CommandTestCase
         ]);
         $this->assertEquals('http://foo.com', $manager->getCurrentRegistry()->getUrl());
     }
-
-    public function testExecuteWithoutArgument()
-    {
-        $manager = new Manager();
-        $this->setExpectedException(RuntimeException::class);
-        $this->runCommandTester(new UseCommand($manager), []);
-    }
 }
