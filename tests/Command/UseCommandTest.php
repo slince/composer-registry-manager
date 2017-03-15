@@ -35,6 +35,11 @@ class UseCommandTest extends CommandTestCase
     public function testExecuteWithoutArguments()
     {
         $commandTester = $this->createCommandTester();
+
+        //If the symfony/console version is less than 3.2, the test is not performed
+        if (!method_exists($commandTester, 'setInputs')) {
+            return;
+        }
         $commandTester->setInputs([1]);
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
