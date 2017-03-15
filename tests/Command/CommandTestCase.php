@@ -9,11 +9,6 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class CommandTestCase extends \PHPUnit_Framework_TestCase
 {
-    protected function createCommandTester(Command $command)
-    {
-        return new CommandTester($command);
-    }
-
     protected function runCommandTester(Command $command, $arguments, $options = [])
     {
         $commandTester = new CommandTester($command);

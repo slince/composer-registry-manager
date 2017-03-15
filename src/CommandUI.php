@@ -15,7 +15,7 @@ use Slince\Crm\Console\Application;
 class CommandUI
 {
     /**
-     * 创建command
+     * Creates all commands
      * @return array
      */
     static function createCommands()
@@ -31,7 +31,7 @@ class CommandUI
     }
 
     /**
-     * command应用主入口
+     * Application entry
      * @throws \Exception
      */
     static function main()

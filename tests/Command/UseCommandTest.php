@@ -3,8 +3,9 @@ namespace Slince\Crm\Tests\Command;
 
 use Slince\Crm\Command\AddCommand;
 use Slince\Crm\Command\UseCommand;
+use Slince\Crm\Console\Application;
 use Slince\Crm\Manager;
-use Symfony\Component\Console\Exception\RuntimeException;
+use Symfony\Component\Console\Tester\CommandTester;
 
 class UseCommandTest extends CommandTestCase
 {
@@ -20,5 +21,31 @@ class UseCommandTest extends CommandTestCase
             'registry-name' => 'foo',
         ]);
         $this->assertEquals('http://foo.com', $manager->getCurrentRegistry()->getUrl());
+    }
+
+    public function testExecuteWithoutArgumentsAndInput()
+    {
+        $commandTester = $this->createCommandTester();
+        $commandTester->execute([]);
+        $display = $commandTester->getDisplay();
+        $this->assertContains('Please select your favorite registry', $display);
+        $this->assertContains('Use registry [composer] success', $display);
+    }
+
+    public function testExecuteWithoutArguments()
+    {
+        $commandTester = $this->createCommandTester();
+        $commandTester->setInputs([1]);
+        $commandTester->execute([]);
+        $display = $commandTester->getDisplay();
+        $this->assertContains('Please select your favorite registry', $display);
+        $this->assertContains('Use registry [phpcomposer] success', $display);
+    }
+
+    protected function createCommandTester()
+    {
+        $command = new UseCommand(new Manager());
+        $command->setApplication(new Application());
+        return new CommandTester($command);
     }
 }

@@ -5,7 +5,7 @@
  */
 namespace Slince\Crm\Exception;
 
-class RuntimeException extends \InvalidArgumentException
+class RuntimeException extends \RuntimeException
 {
 
 }
