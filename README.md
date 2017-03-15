@@ -56,4 +56,4 @@ Available commands:
 
 ## LICENSE
 
-Apache-2.0
+[MIT](https://opensource.org/licenses/MIT)
