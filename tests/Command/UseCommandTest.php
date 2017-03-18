@@ -23,7 +23,7 @@ class UseCommandTest extends CommandTestCase
         $this->assertEquals('http://foo.com', $manager->getCurrentRegistry()->getUrl());
     }
 
-    public function testExecuteWithCurrent()
+    public function testExecuteForCurrent()
     {
         $manager = new Manager();
         $this->runCommandTester(new AddCommand($manager), [
@@ -35,9 +35,7 @@ class UseCommandTest extends CommandTestCase
         ]);
         $this->runCommandTester(new UseCommand($manager), [
             'registry-name' => 'bar',
-            '-c'
-        ], [
-
+            '--current' => true
         ]);
         $this->assertEquals('https://packagist.org', $manager->getCurrentRegistry()->getUrl());
         $this->assertEquals('http://bar.com', $manager->getCurrentRegistry(true)->getUrl());

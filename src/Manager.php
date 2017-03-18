@@ -122,8 +122,7 @@ class Manager
     {
         $rawOutput = $this->runSystemCommand($isCurrent
             ? "composer config repo.packagist.org"
-            : "composer config -g repo.packagist.org"
-        );
+            : "composer config -g repo.packagist.org");
         $registryData = json_decode($rawOutput, true);
         if (json_last_error()) {
             throw new RuntimeException(sprintf("Can not find current registry, error: %s", json_last_error_msg()));

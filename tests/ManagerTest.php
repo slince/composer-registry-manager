@@ -44,7 +44,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $manager->findRegistry('foo');
     }
 
-    public function testGetComposerCurrentRegistry()
+    public function testGetCurrentRegistry()
     {
         $manager = new Manager();
         $registry = $manager->getCurrentRegistry();
@@ -57,6 +57,21 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $registry = new Registry('foo', 'http://foo.com');
         $manager->useRegistry($registry);
         $this->assertRegExp('#foo\.com#', $manager->getCurrentRegistry()->getUrl());
+        //Reset composer
+        $registry = new Registry('composer', 'https://packagist.org');
+        $manager->useRegistry($registry);
+    }
+
+    public function testUseRegistryForCurrent()
+    {
+        $manager = new Manager();
+        $fooRegistry = new Registry('foo', 'http://foo.com');
+        $barRegistry = new Registry('bar', 'http://bar.com');
+        $manager->useRegistry($fooRegistry, true);
+        $manager->useRegistry($barRegistry);
+        $this->assertNotRegExp('#foo\.com#', $manager->getCurrentRegistry()->getUrl());
+        $this->assertRegExp('#foo\.com#', $manager->getCurrentRegistry(true)->getUrl());
+        $this->assertRegExp('#bar\.com#', $manager->getCurrentRegistry()->getUrl());
         //Reset composer
         $registry = new Registry('composer', 'https://packagist.org');
         $manager->useRegistry($registry);

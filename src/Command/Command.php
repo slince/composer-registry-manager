@@ -18,6 +18,12 @@ class Command extends BaseCommand implements CommandInterface
      */
     protected $manager;
 
+    /**
+     * composer.json
+     * @var string
+     */
+    protected $composerFileName = 'composer.json';
+
     public function __construct(Manager $manager, $name = null)
     {
         $this->manager = $manager;
@@ -74,11 +80,27 @@ class Command extends BaseCommand implements CommandInterface
     {
         $isCurrentMode = $input->getOption('current');
         if ($isCurrentMode) {
-            $composerJson = getcwd() . '/composer.json';
+            $composerJson = getcwd() . DIRECTORY_SEPARATOR . $this->composerFileName;
             if (!file_exists($composerJson)) {
                 throw new RuntimeException("Crm could not find a composer.json file");
             }
         }
         return $isCurrentMode;
+    }
+
+    /**
+     * @param string $composerFileName
+     */
+    public function setComposerFileName($composerFileName)
+    {
+        $this->composerFileName = $composerFileName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComposerFileName()
+    {
+        return $this->composerFileName;
     }
 }
