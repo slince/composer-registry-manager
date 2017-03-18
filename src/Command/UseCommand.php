@@ -24,6 +24,7 @@ class UseCommand extends Command
      */
     public function configure()
     {
+        parent::configure();
         $this->setName(static::NAME)
             ->setDescription('Change current registry to registry')
             ->addArgument('registry-name', InputArgument::OPTIONAL, 'The registry name you want use');
@@ -50,7 +51,7 @@ class UseCommand extends Command
         }
 
         $registry = $this->getManager()->findRegistry($registryName);
-        $this->getManager()->useRegistry($registry);
+        $this->getManager()->useRegistry($registry, $this->checkIsCurrent($input));
 
         $output->writeln("<info>Use registry [{$registryName}] success</info>");
     }

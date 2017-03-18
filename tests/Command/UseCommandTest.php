@@ -23,6 +23,26 @@ class UseCommandTest extends CommandTestCase
         $this->assertEquals('http://foo.com', $manager->getCurrentRegistry()->getUrl());
     }
 
+    public function testExecuteWithCurrent()
+    {
+        $manager = new Manager();
+        $this->runCommandTester(new AddCommand($manager), [
+            'registry-name' => 'bar',
+            'registry-url' => 'http://bar.com',
+        ]);
+        $this->runCommandTester(new UseCommand($manager), [
+            'registry-name' => 'composer',
+        ]);
+        $this->runCommandTester(new UseCommand($manager), [
+            'registry-name' => 'bar',
+            '-c'
+        ], [
+
+        ]);
+        $this->assertEquals('https://packagist.org', $manager->getCurrentRegistry()->getUrl());
+        $this->assertEquals('http://bar.com', $manager->getCurrentRegistry(true)->getUrl());
+    }
+
     public function testExecuteWithoutArgumentsAndInput()
     {
         $commandTester = $this->createCommandTester();

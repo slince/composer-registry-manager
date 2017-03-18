@@ -5,8 +5,11 @@
  */
 namespace Slince\Crm\Command;
 
+use Slince\Crm\Exception\RuntimeException;
 use Slince\Crm\Manager;
 use Symfony\Component\Console\Command\Command as BaseCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 class Command extends BaseCommand implements CommandInterface
 {
@@ -20,6 +23,11 @@ class Command extends BaseCommand implements CommandInterface
         $this->manager = $manager;
         $this->manager->readRegistriesFromFile($this->getRepositoriesConfigFile());
         parent::__construct($name);
+    }
+
+    public function configure()
+    {
+        $this->addOption('current', 'c', InputOption::VALUE_NONE, 'Manage the current config file');
     }
 
     /**
@@ -54,5 +62,23 @@ class Command extends BaseCommand implements CommandInterface
     public function getDefaultRepositoriesConfigFile()
     {
         return __DIR__ . '/../../crm.default.json';
+    }
+
+    /**
+     * Is global mode
+     * @param InputInterface $input
+     * @throws RuntimeException
+     * @return bool
+     */
+    public function checkIsCurrent(InputInterface $input)
+    {
+        $isCurrentMode = $input->getOption('current');
+        if ($isCurrentMode) {
+            $composerJson = getcwd() . '/composer.json';
+            if (!file_exists($composerJson)) {
+                throw new RuntimeException("Crm could not find a composer.json file");
+            }
+        }
+        return $isCurrentMode;
     }
 }

@@ -23,6 +23,7 @@ class ListCommand extends Command
      */
     public function configure()
     {
+        parent::configure();
         $this->setName(static::NAME)
             ->setDescription("List all available registries");
     }
@@ -32,7 +33,7 @@ class ListCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $currentRegistry = $this->getManager()->getCurrentRegistry();
+        $currentRegistry = $this->getManager()->getCurrentRegistry($this->checkIsCurrent($input));
         $registries = $this->getManager()->getRegistries();
 
         //find all registry records

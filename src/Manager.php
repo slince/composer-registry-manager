@@ -103,22 +103,27 @@ class Manager
     /**
      * Use Registry
      * @param Registry $registry
+     * @param boolean $isCurrent
      * @return void
      */
-    public function useRegistry(Registry $registry)
+    public function useRegistry(Registry $registry, $isCurrent = false)
     {
-        $command = $this->makeUseRegistryCommand($registry);
+        $command = $this->makeUseRegistryCommand($registry, $isCurrent);
         $this->runSystemCommand($command);
     }
 
     /**
      * Get Current Registry
+     * @param boolean $isCurrent
      * @throws RuntimeException
      * @return Registry
      */
-    public function getCurrentRegistry()
+    public function getCurrentRegistry($isCurrent = false)
     {
-        $rawOutput = $this->runSystemCommand("composer config -g repo.packagist.org");
+        $rawOutput = $this->runSystemCommand($isCurrent
+            ? "composer config repo.packagist.org"
+            : "composer config -g repo.packagist.org"
+        );
         $registryData = json_decode($rawOutput, true);
         if (json_last_error()) {
             throw new RuntimeException(sprintf("Can not find current registry, error: %s", json_last_error_msg()));
@@ -137,11 +142,14 @@ class Manager
     /**
      * Make change registry command string
      * @param Registry $registry
+     * @param boolean $isCurrent
      * @return string
      */
-    protected function makeUseRegistryCommand(Registry $registry)
+    protected function makeUseRegistryCommand(Registry $registry, $isCurrent)
     {
-        $command = "composer config -g repo.packagist composer %s";
+        $command = $isCurrent
+            ? "composer config repo.packagist composer %s"
+            : "composer config -g repo.packagist composer %s";
         return sprintf($command, $registry->getUrl());
     }
 
