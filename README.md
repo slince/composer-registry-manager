@@ -28,6 +28,16 @@ $ crm ls
 * composer-proxy https://packagist.composer-proxy.org
 
 ```
+If you want list all registries for the current project, you need add option `--current/-c`
+
+```
+$ crm ls -c
+
+* composer       https://packagist.org
+  phpcomposer    https://packagist.phpcomposer.com
+  composer-proxy https://packagist.composer-proxy.org
+
+```
 
 Use registry
 
@@ -35,6 +45,7 @@ Use registry
 $ crm use phpcomposer
 
 ```
+Likewise, add the option `--current/-c` for the current project.
 
 
 Available commands:
