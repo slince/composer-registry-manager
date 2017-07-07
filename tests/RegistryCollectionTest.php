@@ -3,8 +3,9 @@ namespace Slince\Crm\Tests;
 
 use Slince\Crm\Registry;
 use Slince\Crm\RegistryCollection;
+use PHPUnit\Framework\TestCase;
 
-class RegistryCollectionTest extends \PHPUnit_Framework_TestCase
+class RegistryCollectionTest extends TestCase
 {
     public function testCreate()
     {

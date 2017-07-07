@@ -50,7 +50,7 @@ class ConfigPath
      */
     public static function getDefaultConfigFile()
     {
-        return __DIR__ . '/crm.default.json';
+        return __DIR__ . '/../crm.default.json';
     }
 
     /**

@@ -1,10 +1,11 @@
 <?php
 namespace Slince\Crm\Tests\Command;
 
+use PHPUnit\Framework\TestCase;
 use Slince\Crm\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class CommandTestCase extends \PHPUnit_Framework_TestCase
+class CommandTestCase extends TestCase
 {
     protected function runCommandTester(Command $command, $arguments, $options = [])
     {

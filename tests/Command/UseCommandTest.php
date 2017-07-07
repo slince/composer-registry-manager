@@ -4,6 +4,7 @@ namespace Slince\Crm\Tests\Command;
 use Slince\Crm\Application;
 use Slince\Crm\Command\AddCommand;
 use Slince\Crm\Command\UseCommand;
+use Slince\Crm\ConfigPath;
 use Slince\Crm\RegistryManager;
 use Slince\Crm\Tests\Stub\RegistryManagerStub;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -17,7 +18,6 @@ class UseCommandTest extends CommandTestCase
             'registry-name' => 'foo',
             'registry-url' => 'http://foo.com',
         ]);
-        $this->assertNotEquals('http://foo.com', $manager->getCurrentRegistry()->getUrl());
         $this->runCommandTester(new UseCommand($manager), [
             'registry-name' => 'foo',
         ]);
@@ -27,6 +27,7 @@ class UseCommandTest extends CommandTestCase
     public function testExecuteForCurrent()
     {
         $manager = new RegistryManagerStub();
+        $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
         $this->runCommandTester(new AddCommand($manager), [
             'registry-name' => 'bar',
             'registry-url' => 'http://bar.com',
@@ -75,7 +76,9 @@ class UseCommandTest extends CommandTestCase
 
     protected function createCommandTester()
     {
-        $command = new UseCommand(new RegistryManagerStub());
+        $manager = new RegistryManagerStub();
+        $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
+        $command = new UseCommand($manager);
         $command->setApplication(new Application());
         return new CommandTester($command);
     }

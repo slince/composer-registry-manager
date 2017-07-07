@@ -1,10 +1,11 @@
 <?php
 namespace Slince\Crm\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Slince\Crm\Exception\InvalidArgumentException;
 use Slince\Crm\Registry;
 
-class RegistryTest extends \PHPUnit_Framework_TestCase
+class RegistryTest extends TestCase
 {
 
     public function testCreate()

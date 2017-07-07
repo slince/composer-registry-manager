@@ -1,7 +1,7 @@
 <?php
 namespace Slince\Crm\Tests\Console;
 
-use Slince\Crm\Console\Application;
+use Slince\Crm\Application;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
 {

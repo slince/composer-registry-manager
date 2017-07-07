@@ -22,10 +22,10 @@ class Application extends BaseApplication
      */
     protected $manager;
 
-    public function __construct()
+    public function __construct(RegistryManager $manager = null)
     {
+        $this->manager = $manager ?: new RegistryManager();
         parent::__construct(static::NAME);
-        $this->manager = new RegistryManager();
     }
 
     public function run(InputInterface $input = null, OutputInterface $output = null)

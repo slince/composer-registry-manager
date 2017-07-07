@@ -1,10 +1,11 @@
 <?php
 namespace Slince\Crm\Tests\Command;
 
+use PHPUnit\Framework\TestCase;
 use Slince\Crm\Command\Command;
 use Slince\Crm\Tests\Stub\RegistryManagerStub;
 
-class CommandTest extends \PHPUnit_Framework_TestCase
+class CommandTest extends TestCase
 {
     protected function createCommand()
     {

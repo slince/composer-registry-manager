@@ -3,6 +3,7 @@ namespace Slince\Crm\Tests\Command;
 
 use Slince\Crm\Command\ListCommand;
 use Slince\Crm\Command\UseCommand;
+use Slince\Crm\ConfigPath;
 use Slince\Crm\RegistryManager;
 use Slince\Crm\Registry;
 use Slince\Crm\Exception\RuntimeException;
@@ -13,12 +14,15 @@ class ListCommandTest extends CommandTestCase
 {
     public function testExecute()
     {
-        $this->assertRegExp('#packagist\.org#', $this->runCommandTester(new ListCommand(new RegistryManagerStub()), []));
+        $manager = new RegistryManagerStub();
+        $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
+        $this->assertRegExp('#packagist\.org#', $this->runCommandTester(new ListCommand($manager), []));
     }
 
     public function testForCurrent()
     {
         $manager = new RegistryManagerStub();
+        $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
         $this->runCommandTester(new UseCommand($manager), [
             'registry-name' => 'phpcomposer',
             '--current' => true
@@ -31,7 +35,9 @@ class ListCommandTest extends CommandTestCase
     public function testForCurrentException()
     {
         $this->expectException(RuntimeException::class);
-        $command = new UseCommand(new RegistryManagerStub());
+        $manager = new RegistryManagerStub();
+        $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
+        $command = new UseCommand($manager);
         $command->setComposerFileName('for-test.json'); //Just for test
         $this->runCommandTester($command, [
             'registry-name' => 'phpcomposer',
