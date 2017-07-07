@@ -5,6 +5,7 @@
  */
 namespace Slince\Crm\Command;
 
+use Slince\Crm\ConfigPath;
 use Slince\Crm\Utils;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -38,7 +39,7 @@ class ResetCommand extends Command
             return;
         }
         $filesystem = Utils::getFilesystem();
-        $filesystem->copy($this->getDefaultRepositoriesConfigFile(), $this->getRepositoriesConfigFile(), true);
+        $filesystem->copy(ConfigPath::getDefaultConfigFile(), ConfigPath::getUserConfigFile(), true);
 
         $output->writeln("<info>Reset registry configurations success</info>");
     }
