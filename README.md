@@ -7,6 +7,8 @@
 
 Composer Registry Manager can help you easily and quickly switch between different composer registries.
 
+![Screenshot](./assets/screenshot.gif)
+
 ## Installation
 
 Install via composer
