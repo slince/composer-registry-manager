@@ -59,7 +59,7 @@ $ crm -l
 | |___  | | \ \   / /       | |
 \_____| |_|  \_\ /_/        |_|
 
-Composer Registry Manager
+Composer Registry Manager 1.2.0 by Tao and contributors.
 
 Usage:
   command [options] [arguments]

@@ -12,10 +12,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Application extends BaseApplication
 {
     /**
+     * @var string
+     */
+    const VERSION = '1.2.0';
+
+    /**
      * Application name
      * @var string
      */
-    const NAME = 'Composer Registry Manager';
+    const NAME = 'Composer Registry Manager %s by Tao and contributors.';
 
     protected static $logo = <<<EOT
  _____   _____        ___  ___  
@@ -36,7 +41,7 @@ EOT;
     public function __construct(RegistryManager $manager = null)
     {
         $this->manager = $manager ?: new RegistryManager();
-        parent::__construct(static::NAME);
+        parent::__construct(sprintf(static::NAME, static::VERSION));
     }
 
     /**
