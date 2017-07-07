@@ -10,6 +10,6 @@ class ApplicationTest extends TestCase
     {
         $application = new Application();
         $this->assertInstanceOf(\Symfony\Component\Console\Application::class, $application);
-        $this->assertEquals(Application::NAME, $application->getName());
+        $this->assertContains('Composer Registry Manager', $application->getName());
     }
 }
