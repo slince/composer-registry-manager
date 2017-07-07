@@ -4,14 +4,15 @@ namespace Slince\Crm\Tests\Command;
 use Slince\Crm\Command\AddCommand;
 use Slince\Crm\Command\ListCommand;
 use Slince\Crm\Command\RemoveCommand;
-use Slince\Crm\Manager;
+use Slince\Crm\RegistryManager;
+use Slince\Crm\Tests\Stub\RegistryManagerStub;
 use Symfony\Component\Console\Exception\RuntimeException;
 
 class RemoveCommandTest extends CommandTestCase
 {
     public function testExecute()
     {
-        $manager = new Manager();
+        $manager = new RegistryManagerStub();
 
         $this->runCommandTester(new AddCommand($manager), [
             'registry-name' => 'foo',
@@ -29,7 +30,7 @@ class RemoveCommandTest extends CommandTestCase
 
     public function testExecuteWithoutArgument()
     {
-        $this->setExpectedException(RuntimeException::class);
-        $this->runCommandTester(new RemoveCommand(new Manager()), []);
+        $this->expectException(RuntimeException::class);
+        $this->runCommandTester(new RemoveCommand(new RegistryManagerStub()), []);
     }
 }

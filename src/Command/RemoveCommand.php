@@ -5,6 +5,7 @@
  */
 namespace Slince\Crm\Command;
 
+use Slince\Crm\ConfigPath;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -35,7 +36,7 @@ class RemoveCommand extends Command
         $registryName = $input->getArgument('registry-name');
         //Remove registry & dump to config file
         $this->getManager()->removeRegistry($registryName);
-        $this->getManager()->dumpRepositoriesToFile($this->getRepositoriesConfigFile());
+        $this->getManager()->dumpRepositoriesToFile(ConfigPath::getUserConfigFile());
 
         $output->writeln("<info>Remove registry [{$registryName}] success</info>");
     }

@@ -1,17 +1,18 @@
 <?php
 namespace Slince\Crm\Tests\Command;
 
+use Slince\Crm\Application;
 use Slince\Crm\Command\AddCommand;
 use Slince\Crm\Command\UseCommand;
-use Slince\Crm\Console\Application;
-use Slince\Crm\Manager;
+use Slince\Crm\RegistryManager;
+use Slince\Crm\Tests\Stub\RegistryManagerStub;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class UseCommandTest extends CommandTestCase
 {
     public function testExecute()
     {
-        $manager = new Manager();
+        $manager = new RegistryManagerStub();
         $this->runCommandTester(new AddCommand($manager), [
             'registry-name' => 'foo',
             'registry-url' => 'http://foo.com',
@@ -25,7 +26,7 @@ class UseCommandTest extends CommandTestCase
 
     public function testExecuteForCurrent()
     {
-        $manager = new Manager();
+        $manager = new RegistryManagerStub();
         $this->runCommandTester(new AddCommand($manager), [
             'registry-name' => 'bar',
             'registry-url' => 'http://bar.com',
@@ -74,7 +75,7 @@ class UseCommandTest extends CommandTestCase
 
     protected function createCommandTester()
     {
-        $command = new UseCommand(new Manager());
+        $command = new UseCommand(new RegistryManagerStub());
         $command->setApplication(new Application());
         return new CommandTester($command);
     }

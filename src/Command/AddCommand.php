@@ -5,6 +5,7 @@
  */
 namespace Slince\Crm\Command;
 
+use Slince\Crm\ConfigPath;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,7 +38,7 @@ class AddCommand extends Command
         $registryUrl = $input->getArgument('registry-url');
         //Add registry & dump to config file
         $this->getManager()->addRegistry($registryName, $registryUrl);
-        $this->getManager()->dumpRepositoriesToFile($this->getRepositoriesConfigFile());
+        $this->getManager()->dumpRepositoriesToFile(ConfigPath::getUserConfigFile());
 
         $output->writeln("<info>Add registry [{$registryName}] success</info>");
     }

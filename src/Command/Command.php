@@ -6,7 +6,7 @@
 namespace Slince\Crm\Command;
 
 use Slince\Crm\Exception\RuntimeException;
-use Slince\Crm\Manager;
+use Slince\Crm\RegistryManager;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 class Command extends BaseCommand implements CommandInterface
 {
     /**
-     * @var Manager
+     * @var RegistryManager
      */
     protected $manager;
 
@@ -24,10 +24,9 @@ class Command extends BaseCommand implements CommandInterface
      */
     protected $composerFileName = 'composer.json';
 
-    public function __construct(Manager $manager, $name = null)
+    public function __construct(RegistryManager $manager, $name = null)
     {
         $this->manager = $manager;
-        $this->manager->readRegistriesFromFile($this->getRepositoriesConfigFile());
         parent::__construct($name);
     }
 
@@ -37,7 +36,7 @@ class Command extends BaseCommand implements CommandInterface
     }
 
     /**
-     * @param Manager $manager
+     * @param RegistryManager $manager
      */
     public function setManager($manager)
     {
@@ -50,24 +49,6 @@ class Command extends BaseCommand implements CommandInterface
     public function getManager()
     {
         return $this->manager;
-    }
-
-    /**
-     * Get config json file
-     * @return string
-     */
-    public function getRepositoriesConfigFile()
-    {
-        return __DIR__ . '/../../crm.json';
-    }
-
-    /**
-     * Get default config json file
-     * @return string
-     */
-    public function getDefaultRepositoriesConfigFile()
-    {
-        return __DIR__ . '/../../crm.default.json';
     }
 
     /**

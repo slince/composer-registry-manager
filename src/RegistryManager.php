@@ -9,7 +9,7 @@ use Slince\Crm\Exception\InvalidArgumentException;
 use Slince\Crm\Exception\RegistryNotExistsException;
 use Slince\Crm\Exception\RuntimeException;
 
-class Manager
+class RegistryManager
 {
     /**
      * registry collection
@@ -28,7 +28,7 @@ class Manager
      */
     public function readRegistriesFromFile($file)
     {
-        $this->registries = RegistryCollection::createFromArray(Utils::readJsonFile($file));
+        $this->registries = RegistryCollection::fromArray(Utils::readJsonFile($file));
     }
 
     /**
@@ -80,8 +80,7 @@ class Manager
         try {
             $registry = $this->findRegistry($name);
             $this->registries->remove($registry);
-        } catch (RegistryNotExistsException $exception) {
-        }
+        } catch (RegistryNotExistsException $exception) {}
     }
 
     /**
@@ -154,7 +153,7 @@ class Manager
 
     /**
      * Run command
-     * @param $command
+     * @param string $command
      * @return string
      */
     protected function runSystemCommand($command)

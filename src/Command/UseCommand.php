@@ -26,7 +26,7 @@ class UseCommand extends Command
     {
         parent::configure();
         $this->setName(static::NAME)
-            ->setDescription('Change current registry to registry')
+            ->setDescription('Change current registry')
             ->addArgument('registry-name', InputArgument::OPTIONAL, 'The registry name you want use');
     }
 

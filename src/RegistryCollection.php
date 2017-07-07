@@ -9,7 +9,6 @@ use Slince\Crm\Exception\InvalidArgumentException;
 
 class RegistryCollection implements \IteratorAggregate, \ArrayAccess
 {
-
     /**
      * @var Registry[]
      */
@@ -71,7 +70,7 @@ class RegistryCollection implements \IteratorAggregate, \ArrayAccess
      * @throws InvalidArgumentException
      * @return static
      */
-    public static function createFromArray($data)
+    public static function fromArray($data)
     {
         return new static(array_map(function ($registryData) {
             return Registry::create($registryData);

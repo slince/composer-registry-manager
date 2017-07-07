@@ -1,9 +1,9 @@
 <?php
 namespace Slince\Crm\Tests\Command;
 
+use Slince\Crm\Application;
 use Slince\Crm\Command\ResetCommand;
-use Slince\Crm\Console\Application;
-use Slince\Crm\Manager;
+use Slince\Crm\Tests\Stub\RegistryManagerStub;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class ResetCommandTest extends CommandTestCase
@@ -25,7 +25,7 @@ class ResetCommandTest extends CommandTestCase
 
     protected function createCommandTester()
     {
-        $command = new ResetCommand(new Manager());
+        $command = new ResetCommand(new RegistryManagerStub());
         $command->setApplication(new Application());
         return new CommandTester($command);
     }

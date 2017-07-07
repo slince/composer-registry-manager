@@ -3,14 +3,14 @@ namespace Slince\Crm\Tests\Command;
 
 use Slince\Crm\Command\AddCommand;
 use Slince\Crm\Command\ListCommand;
-use Slince\Crm\Manager;
+use Slince\Crm\Tests\Stub\RegistryManagerStub;
 use Symfony\Component\Console\Exception\RuntimeException;
 
 class AddCommandTest extends CommandTestCase
 {
     public function testExecute()
     {
-        $manager = new Manager();
+        $manager = new RegistryManagerStub();
         $this->assertRegExp('#success#', $this->runCommandTester(new AddCommand($manager), [
             'registry-name' => 'foo',
             'registry-url' => 'http://foo.com',
@@ -20,8 +20,8 @@ class AddCommandTest extends CommandTestCase
 
     public function testExecuteWithoutArgument()
     {
-        $manager = new Manager();
-        $this->setExpectedException(RuntimeException::class);
+        $manager = new RegistryManagerStub();
+        $this->expectException(RuntimeException::class);
         $this->runCommandTester(new AddCommand($manager), [
             'registry-name' => 'foo',
         ]);

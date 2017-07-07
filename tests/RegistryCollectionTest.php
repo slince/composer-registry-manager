@@ -17,7 +17,7 @@ class RegistryCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateFromArray()
     {
-        $registries = RegistryCollection::createFromArray([
+        $registries = RegistryCollection::fromArray([
             ['name' => 'foo', 'url' => 'http://foo.com'],
             ['name' => 'bar', 'url' => 'http://bar.com']
         ]);
@@ -26,7 +26,7 @@ class RegistryCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testAdd()
     {
-        $registries = RegistryCollection::createFromArray([
+        $registries = RegistryCollection::fromArray([
             ['name' => 'foo', 'url' => 'http://foo.com'],
             ['name' => 'bar', 'url' => 'http://bar.com']
         ]);

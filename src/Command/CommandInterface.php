@@ -5,13 +5,13 @@
  */
 namespace Slince\Crm\Command;
 
-use Slince\Crm\Manager;
+use Slince\Crm\RegistryManager;
 
 interface CommandInterface
 {
     /**
      * Get manager instance
-     * @return Manager
+     * @return RegistryManager
      */
     public function getManager();
 }
