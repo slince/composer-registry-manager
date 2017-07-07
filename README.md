@@ -85,4 +85,4 @@ Available commands:
 
 ## LICENSE
 
-[MIT](https://opensource.org/licenses/MIT)
+The MIT license. See [MIT](https://opensource.org/licenses/MIT)
