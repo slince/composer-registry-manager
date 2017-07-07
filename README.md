@@ -48,9 +48,30 @@ Likewise, add the option `--current/-c` for the current project.
 
 ### Available commands
 
+Use the following command for help.
+
 ```bash
-$ crm --list
-...
+$ crm -l
+ _____   _____        ___  ___
+/  ___| |  _  \      /   |/   |
+| |     | |_| |     / /|   /| |
+| |     |  _  /    / / |__/ | |
+| |___  | | \ \   / /       | |
+\_____| |_|  \_\ /_/        |_|
+
+Composer Registry Manager
+
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help            Display this help message
+  -q, --quiet           Do not output any message
+  -V, --version         Display this application version
+      --ansi            Force ANSI output
+      --no-ansi         Disable ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
 Available commands:
   add     Add one custom registry
@@ -59,7 +80,7 @@ Available commands:
   ls      List all available registries
   remove  Delete one custom registry
   reset   Reset registry configurations
-  use     Change current registry to registry
+  use     Change current registry
 ```
 
 ## LICENSE

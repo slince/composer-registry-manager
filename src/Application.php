@@ -17,6 +17,17 @@ class Application extends BaseApplication
      */
     const NAME = 'Composer Registry Manager';
 
+    protected static $logo = <<<EOT
+ _____   _____        ___  ___  
+/  ___| |  _  \      /   |/   | 
+| |     | |_| |     / /|   /| | 
+| |     |  _  /    / / |__/ | | 
+| |___  | | \ \   / /       | | 
+\_____| |_|  \_\ /_/        |_| 
+
+
+EOT;
+
     /**
      * @var RegistryManager
      */
@@ -47,6 +58,14 @@ class Application extends BaseApplication
             Utils::getFilesystem()->copy(ConfigPath::getDefaultConfigFile(), ConfigPath::getUserConfigFile());
         }
         $this->manager->readRegistriesFromFile(ConfigPath::getUserConfigFile());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getHelp()
+    {
+        return static::$logo . parent::getHelp();
     }
 
     /**
