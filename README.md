@@ -1,9 +1,10 @@
 # CRM - Composer Registry Manager
 
-[![Build Status](https://img.shields.io/travis/slince/crm/master.svg?style=flat-square)](https://travis-ci.org/slince/crm)
-[![Coverage Status](https://img.shields.io/codecov/c/github/slince/crm.svg?style=flat-square)](https://codecov.io/github/slince/crm)
-[![Total Downloads](https://img.shields.io/packagist/dt/slince/crm.svg?style=flat-square)](https://packagist.org/packages/slince/crm)
-[![Latest Stable Version](https://img.shields.io/packagist/v/slince/crm.svg?style=flat-square&label=stable)](https://packagist.org/packages/slince/crm)
+[![Build Status](https://img.shields.io/travis/slince/composer-registry-manager/master.svg?style=flat-square)](https://travis-ci.org/slince/composer-registry-manager)
+[![Coverage Status](https://img.shields.io/codecov/c/github/slince/composer-registry-manager.svg?style=flat-square)](https://codecov.io/github/slince/composer-registry-manager)
+[![Total Downloads](https://img.shields.io/packagist/dt/slince/composer-registry-manager.svg?style=flat-square)](https://packagist.org/packages/slince/composer-registry-manager)
+[![Latest Stable Version](https://img.shields.io/packagist/v/slince/composer-registry-manager.svg?style=flat-square&label=stable)](https://packagist.org/packages/slince/composer-registry-manager)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/slince/composer-registry-manager.svg?style=flat-square)](https://scrutinizer-ci.com/g/slince/composer-registry-manager/?branch=master)
 
 CRM can help you easily and quickly switch between different composer registries, now include: [phpcomposer](http://www.phpcomposer.com/),[composer-proxy](https://www.composer-proxy.org/) 
 and [packagist](https://packagist.org/)
@@ -12,15 +13,16 @@ and [packagist](https://packagist.org/)
 ## Install
 
 Install via composer
-```
-composer global require slince/crm
+
+```bash
+$ composer global require slince/composer-registry-manager
 ```
 
 ## Example
 
-List all available registries
+### List all available registries
 
-```
+```bash
 $ crm ls
 
   composer       https://packagist.org
@@ -30,7 +32,7 @@ $ crm ls
 ```
 If you want list all registries for the current project, you need add option `--current/-c`
 
-```
+```bash
 $ crm ls -c
 
 * composer       https://packagist.org
@@ -39,20 +41,18 @@ $ crm ls -c
 
 ```
 
-Use registry
+### Switch registry
 
-```
+```bash
 $ crm use phpcomposer
-
 ```
 Likewise, add the option `--current/-c` for the current project.
 
 
-Available commands:
+### Available commands
 
-```
+```bash
 $ crm --list
-
 ...
 
 Available commands:

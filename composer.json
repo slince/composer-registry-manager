@@ -1,5 +1,5 @@
 {
-    "name": "slince/crm",
+    "name": "slince/composer-registry-manager",
     "description": "Composer registry manager",
     "keywords": ["composer registries", "composer registries manager", "switch composer registries", "composer", "registries"],
     "type": "project",
