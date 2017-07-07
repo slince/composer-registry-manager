@@ -104,6 +104,7 @@ class RegistryManager
      * @param Registry $registry
      * @param boolean $isCurrent
      * @return void
+     * @codeCoverageIgnore
      */
     public function useRegistry(Registry $registry, $isCurrent = false)
     {
@@ -116,6 +117,7 @@ class RegistryManager
      * @param boolean $isCurrent
      * @throws RuntimeException
      * @return Registry
+     * @codeCoverageIgnore
      */
     public function getCurrentRegistry($isCurrent = false)
     {
@@ -142,6 +144,7 @@ class RegistryManager
      * @param Registry $registry
      * @param boolean $isCurrent
      * @return string
+     * @codeCoverageIgnore
      */
     protected function makeUseRegistryCommand(Registry $registry, $isCurrent)
     {
@@ -154,10 +157,16 @@ class RegistryManager
     /**
      * Run command
      * @param string $command
+     * @throws RuntimeException
      * @return string
+     * @codeCoverageIgnore
      */
     protected function runSystemCommand($command)
     {
-        return exec($command);
+        $return = exec($command, $output, $returnVar);
+        if ($returnVar !== 0) {
+            throw new RuntimeException(sprintf('Execute the command "%s" failed, "composer" must be set for crm to run correctly', $command));
+        }
+        return $return;
     }
 }

@@ -25,10 +25,12 @@ class ConfigPath
             return static::$homeConfigDir;
         }
         if (static::isWindows()) {
+            // @codeCoverageIgnoreStart
             if (!getenv('APPDATA')) {
                 throw new \RuntimeException('The APPDATA environment variable must be set for crm to run correctly');
             }
             $homeConfigDir = rtrim(strtr(getenv('APPDATA'), '\\', '/'), '/') . '/ComposerRegistryManager';
+            //codeCoverageIgnoreEnd
         } else {
             $homeConfigDir = (new Xdg())->getHomeConfigDir() . '/composer-registry-manager';
         }

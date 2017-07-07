@@ -28,12 +28,19 @@ class Application extends BaseApplication
         parent::__construct(static::NAME);
     }
 
+    /**
+     * {@inheritdoc}
+     * @codeCoverageIgnore
+     */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
         $this->initializeConfigFile();
         return parent::run($input, $output);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function initializeConfigFile()
     {
         if (!file_exists(ConfigPath::getUserConfigFile())) {

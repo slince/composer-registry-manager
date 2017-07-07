@@ -25,6 +25,8 @@ class RegistryManagerTest extends TestCase
         $this->assertCount(1, $manager->getRegistries()->all());
         $this->assertEquals('foo', $manager->getRegistries()->all()[0]->getName());
         $this->assertEquals('http://foo.com', $manager->getRegistries()->all()[0]->getUrl());
+        $this->expectException(InvalidArgumentException::class);
+        $manager->addRegistry('foo', 'http://foo.com');
     }
 
     public function testFindRegistry()

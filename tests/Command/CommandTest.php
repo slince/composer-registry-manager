@@ -18,4 +18,10 @@ class CommandTest extends TestCase
         $command = $this->createCommand();
         $this->assertInstanceOf(RegistryManagerStub::class, $command->getManager());
     }
+
+    public function testGetComposerName()
+    {
+        $command = $this->createCommand();
+        $this->assertEquals('composer.json', $command->getComposerFileName());
+    }
 }

@@ -38,8 +38,7 @@ class ResetCommand extends Command
         if (!$this->getHelper('question')->ask($input, $output, $question)) {
             return;
         }
-        $filesystem = Utils::getFilesystem();
-        $filesystem->copy(ConfigPath::getDefaultConfigFile(), ConfigPath::getUserConfigFile(), true);
+        Utils::getFilesystem()->copy(ConfigPath::getDefaultConfigFile(), ConfigPath::getUserConfigFile(), true);
 
         $output->writeln("<info>Reset registry configurations success</info>");
     }
