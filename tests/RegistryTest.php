@@ -24,7 +24,7 @@ class RegistryTest extends TestCase
         $this->assertEquals('foo', $registry->getName());
         $this->assertEquals('http://bar.com', $registry->getUrl());
 
-        $this->setExpectedException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         Registry::create([
             'withoutName' => 'foo',
             'withoutUrl' => 'http://bar.com',
