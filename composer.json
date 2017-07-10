@@ -29,5 +29,5 @@
             "Slince\\Crm\\Tests\\": "./tests"
         }
     },
-    "bin": ["bin/crm" ]
+    "bin": ["bin/crm"]
 }

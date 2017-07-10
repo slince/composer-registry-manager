@@ -37,7 +37,7 @@ $ crm ls -c
 * composer       https://packagist.org
   phpcomposer    https://packagist.phpcomposer.com
   composer-proxy https://packagist.composer-proxy.org
-
+  laravel-china  https://packagist.laravel-china.org
 ```
 
 ### Switch registry
