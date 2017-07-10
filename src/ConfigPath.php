@@ -43,7 +43,7 @@ class ConfigPath
      */
     public static function isWindows()
     {
-        return stripos(PHP_OS, 'win') !== false;
+        return DIRECTORY_SEPARATOR == '\\';
     }
 
     /**

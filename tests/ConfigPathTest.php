@@ -8,7 +8,7 @@ class ConfigPathTest extends TestCase
 {
     public function testHomeConfigDir()
     {
-        $this->assertTrue((boolean)preg_match('/win/i', PHP_OS) === ConfigPath::isWindows());
+        $this->assertTrue((boolean)(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') === ConfigPath::isWindows());
     }
 
     public function testDefaultConfigFile()
