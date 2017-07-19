@@ -1,27 +1,31 @@
-# CRM - Composer Registry Manager
+# CRM - Composer源管理工具
 
 [![Build Status](https://img.shields.io/travis/slince/composer-registry-manager/master.svg?style=flat-square)](https://travis-ci.org/slince/composer-registry-manager)
 [![Coverage Status](https://img.shields.io/codecov/c/github/slince/composer-registry-manager.svg?style=flat-square)](https://codecov.io/github/slince/composer-registry-manager)
 [![Latest Stable Version](https://img.shields.io/packagist/v/slince/composer-registry-manager.svg?style=flat-square&label=stable)](https://packagist.org/packages/slince/composer-registry-manager)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/slince/composer-registry-manager.svg?style=flat-square)](https://scrutinizer-ci.com/g/slince/composer-registry-manager/?branch=master)
 
-Composer Registry Manager can help you easily and quickly switch between different composer registries.
+由于composer在国内下载速度非常慢，大家都习惯使用中国镜像，如果正在使用的镜像没有更新或者出现故障你可以使用Composer Registry Manager帮助你轻松地切换到另外一个镜像。
+默认带了四个镜像:
 
-[简体中文](./README-zh_CN.md)
+- https://packagist.org (官方)
+- https://packagist.phpcomposer.com
+- https://packagist.composer-proxy.org
+- https://packagist.laravel-china.org
 
 ![Screenshot](./assets/screenshot.gif)
 
-## Installation
+## 安装
 
-Install via composer
+使用composer安装，执行下面命令
 
 ```bash
 $ composer global require slince/composer-registry-manager
 ```
 
-## Example
+## 基本用法
 
-### List all available registries
+### 列出所有可使用的镜像
 
 ```bash
 $ crm ls
@@ -31,7 +35,7 @@ $ crm ls
 * composer-proxy https://packagist.composer-proxy.org
   laravel-china  https://packagist.laravel-china.org
 ```
-If you want list all registries for the current project, you need add option `--current/-c`
+标“*”表示当前正在使用的源，如果你需要标注当前项目正在使用的源，你需要在命令后面追加选项 `--current/-c`
 
 ```bash
 $ crm ls -c
@@ -42,7 +46,7 @@ $ crm ls -c
   laravel-china  https://packagist.laravel-china.org
 ```
 
-### Switch registry
+### 切换镜像
 
 ```bash
 $ crm use
@@ -53,19 +57,21 @@ Please select your favorite registry (defaults to composer)
   [3] laravel-china
  >
 ```
-You can also skip selection by giving registry name.
+你也可以直接追加镜像名称来跳过选择
+
 ```bash
-$ crm use phpcomposer
+$ crm use composer-proxy
 ```
-Likewise, add the option `--current/-c` for the current project.
+
+同样，添加选项 `--current/-c` 为当前项目切换源。
 
 
-### Available commands
+### 所有命令
 
-Use the following command for help.
+执行下面命令查看
 
 ```bash
-$ crm -l
+$ crm
  _____   _____        ___  ___
 /  ___| |  _  \      /   |/   |
 | |     | |_| |     / /|   /| |
