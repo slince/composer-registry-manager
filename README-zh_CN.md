@@ -6,12 +6,7 @@
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/slince/composer-registry-manager.svg?style=flat-square)](https://scrutinizer-ci.com/g/slince/composer-registry-manager/?branch=master)
 
 由于composer在国内下载速度非常慢，大家都习惯使用中国镜像，如果正在使用的镜像没有更新或者出现故障你可以使用Composer Registry Manager帮助你轻松地切换到另外一个镜像。
-默认带了四个镜像:
-
-- https://packagist.org (官方)
-- https://packagist.phpcomposer.com
-- https://packagist.composer-proxy.org
-- https://packagist.laravel-china.org
+默认带了一些镜像,当然你也可以添加新的镜像。
 
 ![Screenshot](./assets/screenshot.gif)
 
