@@ -10,13 +10,23 @@
  */
 namespace Slince\Crm\Command;
 
-use Slince\Crm\RegistryManager;
+use Composer\Command\BaseCommand;
 
-interface CommandInterface
+class RepoCommand extends BaseCommand
 {
     /**
-     * Get manager instance
-     * @return RegistryManager
+     * {@inheritdoc}
      */
-    public function getManager();
+    public function configure()
+    {
+        $this->setName('repository');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAliases()
+    {
+        return ['repo'];
+    }
 }
