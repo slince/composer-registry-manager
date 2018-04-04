@@ -18,6 +18,7 @@
                 <directory>./tests</directory>
                 <directory>./vendor</directory>
                 <file>./src/RepositoryManager.php</file>
+                <file>./src/ConfigPath.php</file>
             </exclude>
         </whitelist>
     </filter>
