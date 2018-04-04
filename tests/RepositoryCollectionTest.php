@@ -5,7 +5,7 @@ use Slince\Crm\Repository;
 use Slince\Crm\RepositoryCollection;
 use PHPUnit\Framework\TestCase;
 
-class RegistryCollectionTest extends TestCase
+class RepositoryCollectionTest extends TestCase
 {
     public function testCreate()
     {

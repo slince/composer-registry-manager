@@ -5,47 +5,35 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/slince/composer-registry-manager.svg?style=flat-square&label=stable)](https://packagist.org/packages/slince/composer-registry-manager)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/slince/composer-registry-manager.svg?style=flat-square)](https://scrutinizer-ci.com/g/slince/composer-registry-manager/?branch=master)
 
-Composer Registry Manager can help you easily and quickly switch between different composer registries.
+Composer Registry Manager can help you easily and quickly switch between different composer repositories.
 
 [简体中文](./README-zh_CN.md)
-
-![Screenshot](./assets/screenshot.gif)
 
 ## Installation
 
 Install via composer
 
 ```bash
-$ composer global require slince/composer-registry-manager
+$ composer global require slince/composer-registry-manager ^2.0
 ```
 
 ## Example
 
-### List all available registries
+### List all available repositories
 
 ```bash
-$ crm ls
+$ composer repo:ls
 
   composer       https://packagist.org
   phpcomposer    https://packagist.phpcomposer.com
 * composer-proxy https://packagist.composer-proxy.org
   laravel-china  https://packagist.laravel-china.org
 ```
-If you want list all registries for the current project, you need add option `--current/-c`
+
+### Switch repository
 
 ```bash
-$ crm ls -c
-
-* composer       https://packagist.org
-  phpcomposer    https://packagist.phpcomposer.com
-  composer-proxy https://packagist.composer-proxy.org
-  laravel-china  https://packagist.laravel-china.org
-```
-
-### Switch registry
-
-```bash
-$ crm use
+$ composer repo:use
 Please select your favorite registry (defaults to composer)
   [0] composer
   [1] phpcomposer
@@ -53,19 +41,19 @@ Please select your favorite registry (defaults to composer)
   [3] laravel-china
  >
 ```
-You can also skip selection by giving registry name.
-```bash
-$ crm use phpcomposer
-```
-Likewise, add the option `--current/-c` for the current project.
+You can also skip selection by giving repository name.
 
+```bash
+$ composer repo:use phpcomposer
+```
+Add the option `--current/-c` for the current project.
 
 ### Available commands
 
 Use the following command for help.
 
 ```bash
-$ crm -l
+$ composer repo
  _____   _____        ___  ___
 /  ___| |  _  \      /   |/   |
 | |     | |_| |     / /|   /| |
@@ -73,7 +61,7 @@ $ crm -l
 | |___  | | \ \   / /       | |
 \_____| |_|  \_\ /_/        |_|
 
-Composer Registry Manager 1.2.0 by Tao and contributors.
+Composer Repository Manager version 2.0.0
 
 Usage:
   command [options] [arguments]
@@ -87,14 +75,11 @@ Options:
   -n, --no-interaction  Do not ask any interactive question
   -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Available commands:
-  add     Add one custom registry
-  help    Displays help for a command
-  list    Lists commands
-  ls      List all available registries
-  remove  Delete one custom registry
-  reset   Reset registry configurations
-  use     Change current registry
+Available commands for the "repo" namespace:
+  repo:add     Creates a repository
+  repo:ls      List all available repositories
+  repo:remove  Remove a repository
+  repo:use     Change current repository
 ```
 
 ## LICENSE

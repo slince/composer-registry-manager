@@ -1,46 +1,46 @@
 <?php
 namespace Slince\Crm\Tests\Command;
 
-use Slince\Crm\Application;
+use Slince\Crm\ProxyApplication;
 use Slince\Crm\Command\AddCommand;
 use Slince\Crm\Command\UseCommand;
 use Slince\Crm\ConfigPath;
-use Slince\Crm\RegistryManager;
-use Slince\Crm\Tests\Stub\RegistryManagerStub;
+use Slince\Crm\RepositoryManager;
+use Slince\Crm\Tests\Stub\RepositoryManagerStub;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class UseCommandTest extends CommandTestCase
 {
     public function testExecute()
     {
-        $manager = new RegistryManagerStub();
+        $manager = new RepositoryManagerStub();
         $this->runCommandTester(new AddCommand($manager), [
-            'registry-name' => 'foo',
-            'registry-url' => 'http://foo.com',
+            'repository-name' => 'foo',
+            'repository-url' => 'http://foo.com',
         ]);
         $this->runCommandTester(new UseCommand($manager), [
-            'registry-name' => 'foo',
+            'repository-name' => 'foo',
         ]);
-        $this->assertEquals('http://foo.com', $manager->getCurrentRegistry()->getUrl());
+        $this->assertEquals('http://foo.com', $manager->getCurrentRepository()->getUrl());
     }
 
     public function testExecuteForCurrent()
     {
-        $manager = new RegistryManagerStub();
+        $manager = new RepositoryManagerStub();
         $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
         $this->runCommandTester(new AddCommand($manager), [
-            'registry-name' => 'bar',
-            'registry-url' => 'http://bar.com',
+            'repository-name' => 'bar',
+            'repository-url' => 'http://bar.com',
         ]);
         $this->runCommandTester(new UseCommand($manager), [
-            'registry-name' => 'composer',
+            'repository-name' => 'composer',
         ]);
         $this->runCommandTester(new UseCommand($manager), [
-            'registry-name' => 'bar',
+            'repository-name' => 'bar',
             '--current' => true
         ]);
-        $this->assertEquals('https://packagist.org', $manager->getCurrentRegistry()->getUrl());
-        $this->assertEquals('http://bar.com', $manager->getCurrentRegistry(true)->getUrl());
+        $this->assertEquals('https://packagist.org', $manager->getCurrentRepository()->getUrl());
+        $this->assertEquals('http://bar.com', $manager->getCurrentRepository(true)->getUrl());
     }
 
     public function testExecuteWithoutArgumentsAndInput()
@@ -55,8 +55,8 @@ class UseCommandTest extends CommandTestCase
         $commandTester->setInputs([PHP_EOL]);
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
-        $this->assertContains('Please select your favorite registry', $display);
-        $this->assertContains('Use registry [composer] success', $display);
+        $this->assertContains('Please select your favorite repository', $display);
+        $this->assertContains('Use repository [composer] success', $display);
     }
 
     public function testExecuteWithoutArguments()
@@ -70,16 +70,16 @@ class UseCommandTest extends CommandTestCase
         $commandTester->setInputs([1]);
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
-        $this->assertContains('Please select your favorite registry', $display);
-        $this->assertContains('Use registry [phpcomposer] success', $display);
+        $this->assertContains('Please select your favorite repository', $display);
+        $this->assertContains('Use repository [phpcomposer] success', $display);
     }
 
     protected function createCommandTester()
     {
-        $manager = new RegistryManagerStub();
+        $manager = new RepositoryManagerStub();
         $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
         $command = new UseCommand($manager);
-        $command->setApplication(new Application());
+        $command->setApplication(new ProxyApplication([]));
         return new CommandTester($command);
     }
 }

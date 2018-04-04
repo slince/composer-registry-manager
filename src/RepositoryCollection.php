@@ -10,9 +10,7 @@
  */
 namespace Slince\Crm;
 
-use Slince\Crm\Exception\InvalidArgumentException;
-
-class RepositoryCollection implements \IteratorAggregate, \ArrayAccess
+class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countable
 {
     /**
      * @var Repository[]
@@ -86,7 +84,6 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess
 
     /**
      * @param array $data
-     * @throws InvalidArgumentException
      * @return static
      */
     public static function fromArray($data)
@@ -134,5 +131,13 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess
     public function offsetSet($offset, $value)
     {
         $this->repositories[$offset] = $value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->repositories);
     }
 }

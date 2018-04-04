@@ -10,8 +10,6 @@
  */
 namespace Slince\Crm;
 
-use Slince\Crm\Exception\InvalidArgumentException;
-
 class Repository
 {
     /**
@@ -127,13 +125,13 @@ class Repository
     /**
      * factory method
      * @param $repositoryData
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @return static
      */
     public static function create($repositoryData)
     {
         if (empty($repositoryData['name']) || empty($repositoryData['url'])) {
-            throw new InvalidArgumentException("Registry data must contain key [name] and [url]");
+            throw new \InvalidArgumentException("Registry data must contain key [name] and [url]");
         }
         $homepage = isset($repositoryData['homepage']) ? $repositoryData['homepage'] : '';
         $author = isset($repositoryData['author']) ? $repositoryData['author'] : '';

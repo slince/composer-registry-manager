@@ -10,10 +10,11 @@
  */
 namespace Slince\Crm\Command;
 
-use Slince\Crm\ConfigPath;
+use Slince\Crm\Repository;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class RemoveCommand extends Command
 {
@@ -24,7 +25,7 @@ class RemoveCommand extends Command
     {
         $this->setName('repo:remove')
             ->setDescription('Remove a repository')
-            ->addArgument('repository-name', InputArgument::REQUIRED, 'The repository name you want to remove');
+            ->addArgument('repository-name', InputArgument::OPTIONAL, 'The repository name you want to remove');
     }
 
     /**
@@ -32,10 +33,23 @@ class RemoveCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $registryName = $input->getArgument('repository-name');
+        $repositoryName = $input->getArgument('repository-name');
+        //auto select
+        if (is_null($repositoryName)) {
+            $helper = $this->getHelper('question');
+            $question = new ChoiceQuestion(
+                'Please select your favorite repository (defaults to composer)',
+                array_map(function (Repository $repository) {
+                    return $repository->getName();
+                }, $this->repositoryManager->getRepositories()->all()),
+                0
+            );
+            $question->setErrorMessage('repository %s is invalid.');
+            $repositoryName = $helper->ask($input, $output, $question);
+        }
         //Remove registry & dump to config file
-        $this->repositoryManager->removeRepository($registryName);
+        $this->repositoryManager->removeRepository($repositoryName);
 
-        $output->writeln("<info>Remove registry [{$registryName}] success</info>");
+        $output->writeln("<info>Remove registry [{$repositoryName}] success</info>");
     }
 }

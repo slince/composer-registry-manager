@@ -14,6 +14,7 @@ namespace Slince\Crm;
 use Composer\Composer;
 use Composer\Config\ConfigSourceInterface;
 use Composer\Config\JsonConfigSource;
+use Composer\Factory;
 use Composer\IO\IOInterface;
 use Composer\Json\JsonFile;
 use Composer\Plugin\Capability\CommandProvider;
@@ -43,6 +44,9 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      */
     protected static $repositories;
 
+    /**
+     * @var bool
+     */
     protected static $repositoriesLoaded = false;
 
     /**
@@ -86,7 +90,31 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
             $repositories = $config['config']['_repositories'];
         }
         static::$repositoriesLoaded = true;
-        return static::$repositories = RepositoryCollection::fromArray($repositories);
+        static::$repositories = RepositoryCollection::fromArray($repositories);
+        try {
+            $this->migrateFromOld();
+        } catch (\Exception $exception) {
+        }
+        return static::$repositories;
+    }
+
+    protected function migrateFromOld()
+    {
+        if (count(static::$repositories) > 0) {
+            return;
+        }
+        $homeConfigFile = ConfigPath::getUserConfigFile();
+        $repositories = [];
+        if (file_exists($homeConfigFile)) {
+            $repositories = Utils::readJsonFile($homeConfigFile);
+        } elseif (file_exists(ConfigPath::getDefaultConfigFile())) {
+            $repositories = Utils::readJsonFile(ConfigPath::getDefaultConfigFile());
+        }
+        if ($repositories) {
+            $repositories = RepositoryCollection::fromArray($repositories);
+            static::$repositories = $repositories;
+            static::$configSource->addConfigSetting('_repositories', $repositories->toArray());
+        }
     }
 
     /**
@@ -94,15 +122,19 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      *
      * @param string $name
      * @param string $url
+     *
+     * @return Repository
      */
     public function addRepository($name, $url)
     {
         $repositories = $this->getRepositories();
-        $repositories->add(Repository::create([
+        $repository = Repository::create([
             'name' => $name,
             'url' => $url
-        ]));
-        static::$configSource->addConfigSetting('_repositories', $repositories);
+        ]);
+        $repositories->add($repository);
+        static::$configSource->addConfigSetting('_repositories', $repositories->toArray());
+        return $repository;
     }
 
     /**
@@ -113,13 +145,34 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     public function removeRepository($name)
     {
         $repository = $this->getRepositories()->findByName($name);
-        $repositories = $this->getRepositories()->remove($repository);
-        static::$configSource->addConfigSetting('_repositories', $repositories);
+        $repositories = $this->getRepositories();
+        $repositories->remove($repository);
+        static::$configSource->addConfigSetting('_repositories', $repositories->toArray());
     }
 
+
+    /**
+     * Use repository
+     *
+     * @param Repository $repository
+     * @param bool $modifyCurrent
+     */
     public function useRepository(Repository $repository, $modifyCurrent = false)
     {
-
+        if ($modifyCurrent) {
+            $file = Factory::getComposerFile();
+            $configFile = new JsonFile($file);
+            if (!$configFile->exists()) {
+                throw new \RuntimeException('Composer.json is not exists');
+            }
+            $configSource = new JsonConfigSource($configFile);
+        } else {
+            $configSource = static::$configSource;
+        }
+        $configSource->addRepository('packagist', [
+            'type' => 'composer',
+            'url' => $repository->getUrl()
+        ]);
     }
 
     /**
@@ -161,6 +214,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     {
         return [
             new Command\RepoCommand($this),
+            new Command\ListCommand($this),
             new Command\AddCommand($this),
             new Command\RemoveCommand($this),
             new Command\UseCommand($this),

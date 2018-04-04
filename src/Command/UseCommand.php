@@ -13,6 +13,7 @@ namespace Slince\Crm\Command;
 use Slince\Crm\Repository;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
@@ -26,7 +27,8 @@ class UseCommand extends Command
         parent::configure();
         $this->setName('repo:use')
             ->setDescription('Change current repository')
-            ->addArgument('repository-name', InputArgument::OPTIONAL, 'The repository name you want to use');
+            ->addArgument('repository-name', InputArgument::OPTIONAL, 'The repository name you want to use')
+            ->addOption('current', 'c', InputOption::VALUE_NONE, 'Change repository for current project');
     }
 
     /**
@@ -51,7 +53,7 @@ class UseCommand extends Command
 
         $repository = $this->repositoryManager->getRepositories()->findByName($repositoryName);
 
-        $this->repositoryManager->useRepository($repository, $this->checkIsCurrent($input));
+        $this->repositoryManager->useRepository($repository, $input->getOption('current'));
 
         $output->writeln("<info>Use repository [{$repositoryName}] success</info>");
     }
