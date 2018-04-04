@@ -8,30 +8,35 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Slince\Crm;
 
 class Repository
 {
     /**
-     * Registry name
+     * Registry name.
+     *
      * @var string
      */
     protected $name;
 
     /**
-     * Registry url
+     * Registry url.
+     *
      * @var string
      */
     protected $url;
 
     /**
-     * Registry homepage
+     * Registry homepage.
+     *
      * @var string
      */
     protected $homepage;
 
     /**
-     * Registry author
+     * Registry author.
+     *
      * @var string
      */
     protected $author;
@@ -109,7 +114,8 @@ class Repository
     }
 
     /**
-     * convert to array
+     * convert to array.
+     *
      * @return array
      */
     public function toArray()
@@ -123,18 +129,22 @@ class Repository
     }
 
     /**
-     * factory method
+     * factory method.
+     *
      * @param $repositoryData
+     *
      * @throws \InvalidArgumentException
+     *
      * @return static
      */
     public static function create($repositoryData)
     {
         if (empty($repositoryData['name']) || empty($repositoryData['url'])) {
-            throw new \InvalidArgumentException("Registry data must contain key [name] and [url]");
+            throw new \InvalidArgumentException('Registry data must contain key [name] and [url]');
         }
         $homepage = isset($repositoryData['homepage']) ? $repositoryData['homepage'] : '';
         $author = isset($repositoryData['author']) ? $repositoryData['author'] : '';
+
         return new static($repositoryData['name'], $repositoryData['url'], $homepage, $author);
     }
 }

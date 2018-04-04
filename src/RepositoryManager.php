@@ -55,7 +55,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     public function activate(Composer $composer, IOInterface $io)
     {
         static::$composer = $composer;
-        $configFile = static::$composer->getConfig()->get('home') . '/config.json';
+        $configFile = static::$composer->getConfig()->get('home').'/config.json';
         $this->prepareConfigSource(new JsonFile($configFile));
     }
 
@@ -74,7 +74,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     }
 
     /**
-     * Gets all repositories
+     * Gets all repositories.
      *
      * @return RepositoryCollection
      */
@@ -95,6 +95,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
             $this->migrateFromOld();
         } catch (\Exception $exception) {
         }
+
         return static::$repositories;
     }
 
@@ -118,7 +119,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     }
 
     /**
-     * Adds a repository
+     * Adds a repository.
      *
      * @param string $name
      * @param string $url
@@ -130,15 +131,16 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
         $repositories = $this->getRepositories();
         $repository = Repository::create([
             'name' => $name,
-            'url' => $url
+            'url' => $url,
         ]);
         $repositories->add($repository);
         static::$configSource->addConfigSetting('_repositories', $repositories->toArray());
+
         return $repository;
     }
 
     /**
-     * Remove a repository
+     * Remove a repository.
      *
      * @param string $name
      */
@@ -150,12 +152,11 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
         static::$configSource->addConfigSetting('_repositories', $repositories->toArray());
     }
 
-
     /**
-     * Use repository
+     * Use repository.
      *
      * @param Repository $repository
-     * @param bool $modifyCurrent
+     * @param bool       $modifyCurrent
      */
     public function useRepository(Repository $repository, $modifyCurrent = false)
     {
@@ -171,29 +172,30 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
         }
         $configSource->addRepository('packagist', [
             'type' => 'composer',
-            'url' => $repository->getUrl()
+            'url' => $repository->getUrl(),
         ]);
     }
 
     /**
-     * Gets current composer repository
+     * Gets current composer repository.
      *
      * @return Repository
      */
     public function getCurrentComposerRepository()
     {
         $composerRepos = array_filter(static::$composer->getConfig()->getRepositories(), function($repo){
-            return $repo['type'] === 'composer';
+            return 'composer' === $repo['type'];
         });
         $packagistRepoUrl = reset($composerRepos)['url'];
         foreach ($this->getRepositories() as $repository) {
-            if (strcasecmp($repository->getUrl(), $packagistRepoUrl) == 0) {
+            if (0 == strcasecmp($repository->getUrl(), $packagistRepoUrl)) {
                 return $repository;
             }
         }
+
         return Repository::create([
             'url' => $packagistRepoUrl,
-            'name' => 'composer'
+            'name' => 'composer',
         ]);
     }
 
@@ -203,7 +205,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     public function getCapabilities()
     {
         return [
-            CommandProvider::class => __CLASS__
+            CommandProvider::class => __CLASS__,
         ];
     }
 

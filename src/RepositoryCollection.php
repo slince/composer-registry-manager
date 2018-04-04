@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Slince\Crm;
 
 class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countable
@@ -19,6 +20,7 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
 
     /**
      * RegistryCollection constructor.
+     *
      * @param array $repositories
      */
     public function __construct(array $repositories = [])
@@ -27,9 +29,10 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     }
 
     /**
-     * Search repository
+     * Search repository.
      *
      * @param string $name
+     *
      * @return Repository|null
      */
     public function findByName($name)
@@ -37,11 +40,13 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
         $filtered = array_filter($this->repositories, function(Repository $repository) use ($name){
             return $repository->getName() === $name;
         });
+
         return $filtered ? reset($filtered) : null;
     }
 
     /**
-     * Add a registry
+     * Add a registry.
+     *
      * @param Repository $repository
      */
     public function add(Repository $repository)
@@ -50,7 +55,8 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     }
 
     /**
-     * Add a registry
+     * Add a registry.
+     *
      * @param Repository $repository
      */
     public function remove(Repository $repository)
@@ -63,7 +69,8 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     }
 
     /**
-     * Get all registries
+     * Get all registries.
+     *
      * @return Repository[]
      */
     public function all()
@@ -72,7 +79,8 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     }
 
     /**
-     * Convert to array
+     * Convert to array.
+     *
      * @return array
      */
     public function toArray()
@@ -84,6 +92,7 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
 
     /**
      * @param array $data
+     *
      * @return static
      */
     public static function fromArray($data)
