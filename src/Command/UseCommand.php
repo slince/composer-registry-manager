@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the slince/composer-registry-manager package.
+ * This file is part of the slince/composer-repository-manager package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -10,7 +10,7 @@
  */
 namespace Slince\Crm\Command;
 
-use Slince\Crm\Registry;
+use Slince\Crm\Repository;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,20 +19,14 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 class UseCommand extends Command
 {
     /**
-     * Command name
-     * @var string
-     */
-    const NAME = 'use';
-
-    /**
      * {@inheritdoc}
      */
     public function configure()
     {
         parent::configure();
-        $this->setName(static::NAME)
-            ->setDescription('Change current registry')
-            ->addArgument('registry-name', InputArgument::OPTIONAL, 'The registry name you want use');
+        $this->setName('repo:use')
+            ->setDescription('Change current repository')
+            ->addArgument('repository-name', InputArgument::OPTIONAL, 'The repository name you want to use');
     }
 
     /**
@@ -40,24 +34,25 @@ class UseCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $registryName = $input->getArgument('registry-name');
+        $repositoryName = $input->getArgument('repository-name');
         //auto select
-        if (is_null($registryName)) {
+        if (is_null($repositoryName)) {
             $helper = $this->getHelper('question');
             $question = new ChoiceQuestion(
-                'Please select your favorite registry (defaults to composer)',
-                array_map(function (Registry $registry) {
-                    return $registry->getName();
-                }, $this->getManager()->getRegistries()->all()),
+                'Please select your favorite repository (defaults to composer)',
+                array_map(function (Repository $repository) {
+                    return $repository->getName();
+                }, $this->repositoryManager->getRepositories()->all()),
                 0
             );
-            $question->setErrorMessage('Registry %s is invalid.');
-            $registryName = $helper->ask($input, $output, $question);
+            $question->setErrorMessage('repository %s is invalid.');
+            $repositoryName = $helper->ask($input, $output, $question);
         }
 
-        $registry = $this->getManager()->findRegistry($registryName);
-        $this->getManager()->useRegistry($registry, $this->checkIsCurrent($input));
+        $repository = $this->repositoryManager->getRepositories()->findByName($repositoryName);
 
-        $output->writeln("<info>Use registry [{$registryName}] success</info>");
+        $this->repositoryManager->useRepository($repository, $this->checkIsCurrent($input));
+
+        $output->writeln("<info>Use repository [{$repositoryName}] success</info>");
     }
 }

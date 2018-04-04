@@ -5,8 +5,8 @@ use PHPUnit\Framework\TestCase;
 use Slince\Crm\ConfigPath;
 use Slince\Crm\Exception\InvalidArgumentException;
 use Slince\Crm\Exception\RegistryNotExistsException;
-use Slince\Crm\Registry;
-use Slince\Crm\RegistryCollection;
+use Slince\Crm\Repository;
+use Slince\Crm\RepositoryCollection;
 use Slince\Crm\Utils;
 use Slince\Crm\Tests\Stub\RegistryManagerStub;
 
@@ -14,7 +14,7 @@ class RegistryManagerTest extends TestCase
 {
     public function testGetRegistries()
     {
-        $this->assertInstanceOf(RegistryCollection::class, (new RegistryManagerStub())->getRegistries());
+        $this->assertInstanceOf(RepositoryCollection::class, (new RegistryManagerStub())->getRegistries());
     }
 
     public function testAddRegistry()
@@ -51,7 +51,7 @@ class RegistryManagerTest extends TestCase
     public function testUseRegistry()
     {
         $manager = new RegistryManagerStub();
-        $registry = new Registry('foo', 'http://foo.com');
+        $registry = new Repository('foo', 'http://foo.com');
         $manager->useRegistry($registry);
         $this->assertRegExp('#foo\.com#', $manager->getCurrentRegistry()->getUrl());
     }

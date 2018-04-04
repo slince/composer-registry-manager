@@ -1,7 +1,7 @@
 <?php
 namespace Slince\Crm\Tests\Stub;
 
-use Slince\Crm\Registry;
+use Slince\Crm\Repository;
 use Slince\Crm\RegistryManager;
 
 class RegistryManagerStub extends RegistryManager
@@ -10,7 +10,7 @@ class RegistryManagerStub extends RegistryManager
 
     protected $registry;
 
-    public function useRegistry(Registry $registry, $isCurrent = false)
+    public function useRegistry(Repository $registry, $isCurrent = false)
     {
         if ($isCurrent) {
             $this->currentRegistry = $registry;

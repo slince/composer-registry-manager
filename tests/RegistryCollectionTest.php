@@ -1,24 +1,24 @@
 <?php
 namespace Slince\Crm\Tests;
 
-use Slince\Crm\Registry;
-use Slince\Crm\RegistryCollection;
+use Slince\Crm\Repository;
+use Slince\Crm\RepositoryCollection;
 use PHPUnit\Framework\TestCase;
 
 class RegistryCollectionTest extends TestCase
 {
     public function testCreate()
     {
-        $registries = new RegistryCollection([
-            new Registry('foo', 'http://foo.com'),
-            new Registry('bar', 'http://bar.com'),
+        $registries = new RepositoryCollection([
+            new Repository('foo', 'http://foo.com'),
+            new Repository('bar', 'http://bar.com'),
         ]);
         $this->assertCount(2, $registries->all());
     }
 
     public function testCreateFromArray()
     {
-        $registries = RegistryCollection::fromArray([
+        $registries = RepositoryCollection::fromArray([
             ['name' => 'foo', 'url' => 'http://foo.com'],
             ['name' => 'bar', 'url' => 'http://bar.com']
         ]);
@@ -27,19 +27,19 @@ class RegistryCollectionTest extends TestCase
 
     public function testAdd()
     {
-        $registries = RegistryCollection::fromArray([
+        $registries = RepositoryCollection::fromArray([
             ['name' => 'foo', 'url' => 'http://foo.com'],
             ['name' => 'bar', 'url' => 'http://bar.com']
         ]);
-        $registries->add(new Registry('baz', 'http://baz.com'));
+        $registries->add(new Repository('baz', 'http://baz.com'));
         $this->assertCount(3, $registries->all());
     }
 
     public function testRemove()
     {
-        $registries = new RegistryCollection([
-            $foo = new Registry('foo', 'http://foo.com'),
-            new Registry('bar', 'http://bar.com'),
+        $registries = new RepositoryCollection([
+            $foo = new Repository('foo', 'http://foo.com'),
+            new Repository('bar', 'http://bar.com'),
         ]);
         $this->assertCount(2, $registries->all());
         $registries->remove($foo);
@@ -48,9 +48,9 @@ class RegistryCollectionTest extends TestCase
 
     public function testToArray()
     {
-        $registries = new RegistryCollection([
-            $foo = new Registry('foo', 'http://foo.com'),
-            new Registry('bar', 'http://bar.com'),
+        $registries = new RepositoryCollection([
+            $foo = new Repository('foo', 'http://foo.com'),
+            new Repository('bar', 'http://bar.com'),
         ]);
         $registriesData = $registries->toArray();
         $this->assertTrue(is_array($registriesData));
@@ -61,9 +61,9 @@ class RegistryCollectionTest extends TestCase
 
     public function testArrayAccess()
     {
-        $registries = new RegistryCollection([
-            $foo = new Registry('foo', 'http://foo.com'),
-            new Registry('bar', 'http://bar.com'),
+        $registries = new RepositoryCollection([
+            $foo = new Repository('foo', 'http://foo.com'),
+            new Repository('bar', 'http://bar.com'),
         ]);
         $this->assertCount(2, $registries);
         $this->assertEquals('bar', $registries[1]->getName());

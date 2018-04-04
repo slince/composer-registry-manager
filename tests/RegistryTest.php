@@ -3,21 +3,21 @@ namespace Slince\Crm\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Slince\Crm\Exception\InvalidArgumentException;
-use Slince\Crm\Registry;
+use Slince\Crm\Repository;
 
 class RegistryTest extends TestCase
 {
 
     public function testCreate()
     {
-        $registry = new Registry('foo', 'http://bar.com');
+        $registry = new Repository('foo', 'http://bar.com');
         $this->assertEquals('foo', $registry->getName());
         $this->assertEquals('http://bar.com', $registry->getUrl());
     }
 
     public function testFactoryCreate()
     {
-        $registry =  Registry::create([
+        $registry =  Repository::create([
             'name' => 'foo',
             'url' => 'http://bar.com'
         ]);
@@ -25,7 +25,7 @@ class RegistryTest extends TestCase
         $this->assertEquals('http://bar.com', $registry->getUrl());
 
         $this->expectException(InvalidArgumentException::class);
-        Registry::create([
+        Repository::create([
             'withoutName' => 'foo',
             'withoutUrl' => 'http://bar.com',
         ]);
@@ -33,7 +33,7 @@ class RegistryTest extends TestCase
 
     public function testSet()
     {
-        $registry =  Registry::create([
+        $registry =  Repository::create([
             'name' => 'foo',
             'url' => 'http://bar.com'
         ]);
@@ -46,7 +46,7 @@ class RegistryTest extends TestCase
 
     public function testReservedAttribute()
     {
-        $registry =  Registry::create([
+        $registry =  Repository::create([
             'name' => 'foo',
             'url' => 'http://bar.com',
             'homepage' => 'http://baz.com',
@@ -64,7 +64,7 @@ class RegistryTest extends TestCase
 
     public function testToArray()
     {
-        $registry =  Registry::create([
+        $registry =  Repository::create([
             'name' => 'foo',
             'url' => 'http://bar.com'
         ]);

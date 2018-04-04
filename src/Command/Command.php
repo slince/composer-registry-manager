@@ -10,18 +10,18 @@
  */
 namespace Slince\Crm\Command;
 
+use Composer\Command\BaseCommand;
 use Slince\Crm\Exception\RuntimeException;
-use Slince\Crm\RegistryManager;
-use Symfony\Component\Console\Command\Command as BaseCommand;
+use Slince\Crm\RepositoryManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
-class Command extends BaseCommand implements CommandInterface
+class Command extends BaseCommand
 {
     /**
-     * @var RegistryManager
+     * @var RepositoryManager
      */
-    protected $manager;
+    protected $repositoryManager;
 
     /**
      * composer.json
@@ -29,31 +29,15 @@ class Command extends BaseCommand implements CommandInterface
      */
     protected $composerFileName = 'composer.json';
 
-    public function __construct(RegistryManager $manager, $name = null)
+    public function __construct(RepositoryManager $repositoryManager, $name = null)
     {
-        $this->manager = $manager;
+        $this->repositoryManager = $repositoryManager;
         parent::__construct($name);
     }
 
     public function configure()
     {
         $this->addOption('current', 'c', InputOption::VALUE_NONE, 'Manage the current config file');
-    }
-
-    /**
-     * @param RegistryManager $manager
-     */
-    public function setManager($manager)
-    {
-        $this->manager = $manager;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getManager()
-    {
-        return $this->manager;
     }
 
     /**

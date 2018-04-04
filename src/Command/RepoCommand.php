@@ -10,23 +10,59 @@
  */
 namespace Slince\Crm\Command;
 
-use Composer\Command\BaseCommand;
+use Slince\Crm\Repository;
+use Slince\Crm\RepositoryManager;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class RepoCommand extends BaseCommand
+class RepoCommand extends Command
 {
+    protected $input;
+
+    protected $output;
+
     /**
      * {@inheritdoc}
      */
     public function configure()
     {
-        $this->setName('repository');
+        $this->setName('repo')
+            ->setDescription('List all available repositories');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAliases()
+    public function execute(InputInterface $input, OutputInterface $output)
     {
-        return ['repo'];
+        $this->input = $input;
+        $this->output = $output;
+        $this->showAllRepositories();
+    }
+
+    protected function showAllRepositories()
+    {
+        $currentRepository = $this->repositoryManager->getCurrentComposerRepository();
+        //find all registry records
+        $rows = array_map(function (Repository $repository) use ($currentRepository) {
+            if ($currentRepository === $repository) {
+                return [
+                    '<info>*</info>',
+                    "<info>{$repository->getName()}</info>",
+                    "<info>{$repository->getUrl()}</info>"
+                ];
+            } else {
+                return [
+                    '',
+                    $repository->getName(),
+                    $repository->getUrl()
+                ];
+            }
+        }, $this->repositoryManager->getRepositories()->all());
+        $table = new Table($this->output);
+        $table->setRows($rows);
+        $table->setStyle('compact');
+        $table->render();
     }
 }

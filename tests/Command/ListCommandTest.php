@@ -5,7 +5,7 @@ use Slince\Crm\Command\ListCommand;
 use Slince\Crm\Command\UseCommand;
 use Slince\Crm\ConfigPath;
 use Slince\Crm\RegistryManager;
-use Slince\Crm\Registry;
+use Slince\Crm\Repository;
 use Slince\Crm\Exception\RuntimeException;
 use Slince\Crm\Tests\Stub\RegistryManagerStub;
 use Slince\Crm\Utils;

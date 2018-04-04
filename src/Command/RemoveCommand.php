@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the slince/composer-registry-manager package.
+ * This file is part of the slince/composer-repository-manager package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -18,19 +18,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RemoveCommand extends Command
 {
     /**
-     * Command name
-     * @var string
-     */
-    const NAME = 'remove';
-
-    /**
      * {@inheritdoc}
      */
     public function configure()
     {
-        $this->setName(static::NAME)
-            ->setDescription('Delete one custom registry')
-            ->addArgument('registry-name', InputArgument::REQUIRED, 'The registry name you want remove');
+        $this->setName('repo:remove')
+            ->setDescription('Remove a repository')
+            ->addArgument('repository-name', InputArgument::REQUIRED, 'The repository name you want to remove');
     }
 
     /**
@@ -38,10 +32,9 @@ class RemoveCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $registryName = $input->getArgument('registry-name');
+        $registryName = $input->getArgument('repository-name');
         //Remove registry & dump to config file
-        $this->getManager()->removeRegistry($registryName);
-        $this->getManager()->dumpRepositoriesToFile(ConfigPath::getUserConfigFile());
+        $this->repositoryManager->removeRepository($registryName);
 
         $output->writeln("<info>Remove registry [{$registryName}] success</info>");
     }
