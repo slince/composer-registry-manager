@@ -39,11 +39,10 @@ class RemoveCommand extends Command
         if (is_null($repositoryName)) {
             $helper = $this->getHelper('question');
             $question = new ChoiceQuestion(
-                'Please select your favorite repository (defaults to composer)',
+                'Please select repository your want to remove',
                 array_map(function (Repository $repository) {
                     return $repository->getName();
-                }, $this->repositoryManager->getRepositories()->all()),
-                0
+                }, $this->repositoryManager->getRepositories()->all())
             );
             $question->setErrorMessage('repository %s is invalid.');
             $repositoryName = $helper->ask($input, $output, $question);

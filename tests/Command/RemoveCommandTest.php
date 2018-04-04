@@ -42,7 +42,7 @@ class RemoveCommandTest extends CommandTestCase
         $commandTester->setInputs([1]);
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
-        $this->assertContains('Please select your favorite repository', $display);
+        $this->assertContains('Please select repository your want to remove', $display);
         $this->assertContains('Remove registry [phpcomposer] success', $display);
     }
 
