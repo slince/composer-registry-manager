@@ -60,7 +60,9 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     }
 
     /**
-     * {@inheritdoc}
+     * Initialize the config file
+     * @param JsonFile $configFile
+     * @throws
      */
     protected function prepareConfigSource($configFile)
     {

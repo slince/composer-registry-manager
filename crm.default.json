@@ -8,8 +8,16 @@
         "url": "https://packagist.phpcomposer.com"
     },
     {
-        "name": "composer-proxy",
-        "url": "https://packagist.composer-proxy.org"
+        "name": "aliyun",
+        "url": "https://mirrors.aliyun.com/composer"
+    },
+    {
+        "name": "tencent",
+        "url": "https://mirrors.cloud.tencent.com/composer"
+    },
+    {
+        "name": "huawei",
+        "url": "https://mirrors.huaweicloud.com/repository/php"
     },
     {
         "name": "laravel-china",
