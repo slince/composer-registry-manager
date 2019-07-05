@@ -22,5 +22,14 @@
     {
         "name": "laravel-china",
         "url": "https://packagist.laravel-china.org"
+    },
+    {
+        "name": "cnpkg",
+        "url": "https://php.cnpkg.org"
+    },
+    {
+        "name": "sjtug",
+        "url": "https://packagist.mirrors.sjtug.sjtu.edu.cn"
     }
+
 ]
