@@ -29,7 +29,7 @@ class RepositoryManagerTest extends TestCase
     {
         $manager = new RepositoryManagerStub();
         $repository = $manager->addRepository('foo', 'http://foo.com');
-        $this->assertTrue($repository === $manager->getRepositories()->findByName('foo'));
+        $this->assertTrue($repository === $manager->getRepositories()->search('foo'));
     }
 
     public function testRemoveRepository()
@@ -37,7 +37,7 @@ class RepositoryManagerTest extends TestCase
         $manager = new RepositoryManagerStub();
         $repository = $manager->addRepository('foo', 'http://foo.com');
         $manager->removeRepository('foo');
-        $this->assertNull($manager->getRepositories()->findByName('foo'));
+        $this->assertNull($manager->getRepositories()->search('foo'));
     }
 
     public function testUseRepository()

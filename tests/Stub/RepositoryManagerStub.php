@@ -54,7 +54,7 @@ class RepositoryManagerStub extends RepositoryManager
 
     public function removeRepository($name)
     {
-        static::$repositories->remove(static::$repositories->findByName($name));
+        static::$repositories->remove(static::$repositories->search($name));
     }
 
     public function getCurrentComposerRepository()

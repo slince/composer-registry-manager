@@ -4,8 +4,6 @@ namespace Slince\Crm\Tests\Command;
 use Slince\Crm\ProxyApplication;
 use Slince\Crm\Command\AddCommand;
 use Slince\Crm\Command\UseCommand;
-use Slince\Crm\ConfigPath;
-use Slince\Crm\RepositoryManager;
 use Slince\Crm\Tests\Stub\RepositoryManagerStub;
 use Slince\Crm\Utils;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -57,7 +55,7 @@ class UseCommandTest extends CommandTestCase
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
         $this->assertContains('Please select your favorite repository', $display);
-        $this->assertContains('Use repository [composer] success', $display);
+        $this->assertContains('Use the repository [composer] success', $display);
     }
 
     public function testExecuteWithoutArguments()
