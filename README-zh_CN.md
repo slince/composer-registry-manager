@@ -23,10 +23,16 @@ $ composer global require slince/composer-registry-manager
 ```bash
 $ composer repo:ls
 
-  composer       https://packagist.org
-  phpcomposer    https://packagist.phpcomposer.com
-* composer-proxy https://packagist.composer-proxy.org
-  laravel-china  https://packagist.laravel-china.org
+ --- --------------- ------------------------------------------------
+      composer        https://packagist.org
+      phpcomposer     https://packagist.phpcomposer.com
+      aliyun          https://mirrors.aliyun.com/composer
+      tencent         https://mirrors.cloud.tencent.com/composer
+      huawei          https://mirrors.huaweicloud.com/repository/php
+      laravel-china   https://packagist.laravel-china.org
+  *   cnpkg           https://php.cnpkg.org
+      sjtug           https://packagist.mirrors.sjtug.sjtu.edu.cn
+ --- --------------- ------------------------------------------------
 ```
 标“*”表示当前正在使用的源;
 
@@ -34,12 +40,17 @@ $ composer repo:ls
 
 ```bash
 $ composer repo:use
-Please select your favorite registry (defaults to composer)
+
+Please select your favorite repository (defaults to composer) [composer]:
   [0] composer
   [1] phpcomposer
-  [2] composer-proxy
-  [3] laravel-china
- >
+  [2] aliyun
+  [3] tencent
+  [4] huawei
+  [5] laravel-china
+  [6] cnpkg
+  [7] sjtug
+>
 ```
 你也可以直接追加镜像名称来跳过选择
 
