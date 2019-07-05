@@ -14,28 +14,28 @@ namespace Slince\Crm;
 class Repository
 {
     /**
-     * Registry name.
+     * Repository name.
      *
      * @var string
      */
     protected $name;
 
     /**
-     * Registry url.
+     * Repository url.
      *
      * @var string
      */
     protected $url;
 
     /**
-     * Registry homepage.
+     * Repository homepage.
      *
      * @var string
      */
     protected $homepage;
 
     /**
-     * Registry author.
+     * Repository author.
      *
      * @var string
      */
@@ -129,22 +129,22 @@ class Repository
     }
 
     /**
-     * factory method.
+     * Create a repository instance.
      *
-     * @param $repositoryData
+     * @param array $data
      *
      * @throws \InvalidArgumentException
      *
      * @return static
      */
-    public static function create($repositoryData)
+    public static function create($data)
     {
-        if (empty($repositoryData['name']) || empty($repositoryData['url'])) {
-            throw new \InvalidArgumentException('Registry data must contain key [name] and [url]');
+        if (empty($data['name']) || empty($data['url'])) {
+            throw new \InvalidArgumentException('Repository data must contain key [name] and [url]');
         }
-        $homepage = isset($repositoryData['homepage']) ? $repositoryData['homepage'] : '';
-        $author = isset($repositoryData['author']) ? $repositoryData['author'] : '';
+        $homepage = isset($data['homepage']) ? $data['homepage'] : '';
+        $author = isset($data['author']) ? $data['author'] : '';
 
-        return new static($repositoryData['name'], $repositoryData['url'], $homepage, $author);
+        return new static($data['name'], $data['url'], $homepage, $author);
     }
 }

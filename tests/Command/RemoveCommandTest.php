@@ -6,9 +6,8 @@ use Slince\Crm\Command\ListCommand;
 use Slince\Crm\Command\RemoveCommand;
 use Slince\Crm\ConfigPath;
 use Slince\Crm\ProxyApplication;
-use Slince\Crm\RepositoryManager;
 use Slince\Crm\Tests\Stub\RepositoryManagerStub;
-use Symfony\Component\Console\Exception\RuntimeException;
+use Slince\Crm\Utils;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class RemoveCommandTest extends CommandTestCase
@@ -16,7 +15,7 @@ class RemoveCommandTest extends CommandTestCase
     public function testExecute()
     {
         $manager = new RepositoryManagerStub();
-        $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
+        $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
         $this->runCommandTester(new AddCommand($manager), [
             'repository-name' => 'foo',
             'repository-url' => 'http://foo.com',
@@ -43,14 +42,14 @@ class RemoveCommandTest extends CommandTestCase
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
         $this->assertContains('Please select repository your want to remove', $display);
-        $this->assertContains('Remove registry [phpcomposer] success', $display);
+        $this->assertContains('Remove the registry [phpcomposer] success', $display);
     }
 
 
     protected function createCommandTester()
     {
         $manager = new RepositoryManagerStub();
-        $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
+        $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
         $command = new RemoveCommand($manager);
         $command->setApplication(new ProxyApplication([]));
         return new CommandTester($command);

@@ -12,16 +12,12 @@
 namespace Slince\Crm\Command;
 
 use Slince\Crm\Repository;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ListCommand extends Command
 {
-    protected $input;
-
-    protected $output;
-
     /**
      * {@inheritdoc}
      */
@@ -36,15 +32,8 @@ class ListCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->input = $input;
-        $this->output = $output;
-        $this->showAllRepositories();
-    }
-
-    protected function showAllRepositories()
-    {
         $currentRepository = $this->repositoryManager->getCurrentComposerRepository();
-        //find all registry records
+        //find all repository records
         $rows = array_map(function (Repository $repository) use ($currentRepository) {
             if ($currentRepository === $repository) {
                 return [
@@ -60,9 +49,8 @@ class ListCommand extends Command
                 ];
             }
         }, $this->repositoryManager->getRepositories()->all());
-        $table = new Table($this->output);
-        $table->setRows($rows);
-        $table->setStyle('compact');
-        $table->render();
+
+        $style = new SymfonyStyle($input, $output);
+        $style->table([], $rows);
     }
 }

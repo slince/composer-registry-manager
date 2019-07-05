@@ -11,7 +11,7 @@
 
 namespace Slince\Crm;
 
-class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countable
+class RepositoryCollection implements \IteratorAggregate, \Countable
 {
     /**
      * @var Repository[]
@@ -19,8 +19,6 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     protected $repositories = [];
 
     /**
-     * RegistryCollection constructor.
-     *
      * @param array $repositories
      */
     public function __construct(array $repositories = [])
@@ -29,13 +27,13 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     }
 
     /**
-     * Search repository.
+     * Search a repository by the name.
      *
      * @param string $name
      *
      * @return Repository|null
      */
-    public function findByName($name)
+    public function search($name)
     {
         $filtered = array_filter($this->repositories, function(Repository $repository) use ($name){
             return $repository->getName() === $name;
@@ -45,7 +43,7 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     }
 
     /**
-     * Add a registry.
+     * Add a repository.
      *
      * @param Repository $repository
      */
@@ -55,17 +53,29 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     }
 
     /**
-     * Add a registry.
+     * Remove a repository.
      *
      * @param Repository $repository
      */
     public function remove(Repository $repository)
     {
-        foreach ($this->repositories as $index => $_registry) {
-            if ($repository == $_registry) {
-                unset($this->repositories[$index]);
-            }
+        $key = array_search($repository, $this->repositories);
+        if ($key !== false) {
+            unset($this->repositories[$key]);
         }
+    }
+
+    /**
+     *
+     * Checks whether the repository exists.
+     *
+     * @param Repository $repository
+     *
+     * @return boolean
+     */
+    public function has(Repository $repository)
+    {
+        return array_search($repository, $this->repositories) !== false;
     }
 
     /**
@@ -91,6 +101,8 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     }
 
     /**
+     * Creates a collection from array data.
+     *
      * @param array $data
      *
      * @return static
@@ -108,38 +120,6 @@ class RepositoryCollection implements \IteratorAggregate, \ArrayAccess, \Countab
     public function getIterator()
     {
         return new \ArrayIterator($this->repositories);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->repositories[$offset]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetGet($offset)
-    {
-        return $this->repositories[$offset];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->repositories[$offset]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->repositories[$offset] = $value;
     }
 
     /**

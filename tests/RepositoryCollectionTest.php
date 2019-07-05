@@ -58,17 +58,4 @@ class RepositoryCollectionTest extends TestCase
         $this->assertEquals('bar', $registriesData[1]['name']);
         $this->assertEquals('http://bar.com', $registriesData[1]['url']);
     }
-
-    public function testArrayAccess()
-    {
-        $registries = new RepositoryCollection([
-            $foo = new Repository('foo', 'http://foo.com'),
-            new Repository('bar', 'http://bar.com'),
-        ]);
-        $this->assertCount(2, $registries);
-        $this->assertEquals('bar', $registries[1]->getName());
-        $this->assertEquals('http://bar.com', $registries[1]->getUrl());
-        unset($registries[0]);
-        $this->assertCount(1, $registries);
-    }
 }

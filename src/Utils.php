@@ -8,19 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Slince\Crm;
 
-class Utils
+final class Utils
 {
     /**
-     * read json file data.
+     * Read json file data.
      *
-     * @param $file
+     * @param string $file
      *
-     * @return mixed
-     *
-     * @throws \Exception
+     * @return array
      */
     public static function readJsonFile($file)
     {
@@ -32,7 +29,16 @@ class Utils
         if (json_last_error()) {
             throw new \InvalidArgumentException(sprintf('File [%s] must contain valid json, error: %s', $file, json_last_error_msg()));
         }
-
         return $data;
+    }
+
+    /**
+     * Get default config json file.
+     *
+     * @return string
+     */
+    public static function getDefaultConfigFile()
+    {
+        return __DIR__.'/../crm.default.json';
     }
 }

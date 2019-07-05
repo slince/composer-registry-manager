@@ -35,9 +35,18 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     protected static $configFile;
 
     /**
+     * Global config file source.
+     *
      * @var ConfigSourceInterface
      */
     protected static $configSource;
+
+    /**
+     * Config file source of the project.
+     *
+     * @var ConfigSourceInterface
+     */
+    protected static $currentConfigSource;
 
     /**
      * @var RepositoryCollection
@@ -55,24 +64,26 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     public function activate(Composer $composer, IOInterface $io)
     {
         static::$composer = $composer;
-        $configFile = static::$composer->getConfig()->get('home').'/config.json';
-        $this->prepareConfigSource(new JsonFile($configFile));
+        $file = static::$composer->getConfig()->get('home').'/config.json';
+        $this->prepareConfigSource($file);
     }
 
     /**
-     * Initialize the config file
-     * @param JsonFile $configFile
+     * Initialize the config file.
+     *
+     * @param string $file
      * @throws
      */
-    protected function prepareConfigSource($configFile)
+    protected function prepareConfigSource($file)
     {
-        static::$configFile = $configFile;
-        if (!static::$configFile->exists()) {
-            touch(static::$configFile->getPath());
-            static::$configFile->write(['config' => new \ArrayObject()]);
-            Silencer::call('chmod', static::$configFile->getPath(), 0600);
+        $configFile = new JsonFile($file);
+        if (!$configFile->exists()) {
+            touch($configFile->getPath());
+            $configFile->write(['config' => new \ArrayObject()]);
+            Silencer::call('chmod', $configFile->getPath(), 0600);
         }
-        static::$configSource = new JsonConfigSource(static::$configFile);
+        static::$configFile = $configFile;
+        static::$configSource = new JsonConfigSource($configFile);
     }
 
     /**
@@ -85,40 +96,29 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
         if (static::$repositoriesLoaded) {
             return static::$repositories;
         }
-        $config = static::$configFile->read();
-        if (!isset($config['config']['_repositories']) || !is_array($config['config']['_repositories'])) {
-            $repositories = [];
-        } else {
-            $repositories = $config['config']['_repositories'];
-        }
+        static::$repositories = $this->loadRepositories();
         static::$repositoriesLoaded = true;
-        static::$repositories = RepositoryCollection::fromArray($repositories);
-        try {
-            $this->migrateFromOld();
-        } catch (\Exception $exception) {
-        }
-
         return static::$repositories;
     }
 
-    protected function migrateFromOld()
+    /**
+     * Load repository from config file.
+     *
+     * @return RepositoryCollection
+     */
+    protected function loadRepositories()
     {
-        if (count(static::$repositories) > 0) {
-            return;
-        }
-        $homeConfigFile = ConfigPath::getUserConfigFile();
+        $config = static::$configFile->read();
         $repositories = [];
-        if (file_exists($homeConfigFile)) {
-            $repositories = Utils::readJsonFile($homeConfigFile);
-        } elseif (file_exists(ConfigPath::getDefaultConfigFile())) {
-            $repositories = Utils::readJsonFile(ConfigPath::getDefaultConfigFile());
+        if (isset($config['config']['_repositories']) && is_array($config['config']['_repositories'])) {
+            $repositories = $config['config']['_repositories'];
         }
-        if ($repositories) {
-            $repositories = RepositoryCollection::fromArray($repositories);
-            static::$repositories = $repositories;
-            static::$configSource->addConfigSetting('_repositories', $repositories->toArray());
+        if (count($repositories) === 0) {
+            $repositories = Utils::readJsonFile(Utils::getDefaultConfigFile());
         }
+        return RepositoryCollection::fromArray($repositories);
     }
+
 
     /**
      * Adds a repository.
@@ -130,52 +130,58 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      */
     public function addRepository($name, $url)
     {
-        $repositories = $this->getRepositories();
         $repository = Repository::create([
             'name' => $name,
             'url' => $url,
         ]);
-        $repositories->add($repository);
-        static::$configSource->addConfigSetting('_repositories', $repositories->toArray());
-
+        $this->getRepositories()->add($repository);
+        static::$configSource->addConfigSetting('_repositories', $this->getRepositories()->toArray());
         return $repository;
     }
 
     /**
-     * Remove a repository.
+     * Remove a repository by the name.
      *
      * @param string $name
      */
     public function removeRepository($name)
     {
-        $repository = $this->getRepositories()->findByName($name);
-        $repositories = $this->getRepositories();
-        $repositories->remove($repository);
-        static::$configSource->addConfigSetting('_repositories', $repositories->toArray());
+        $repository = $this->getRepositories()->search($name);
+        $this->getRepositories()->remove($repository);
+        static::$configSource->addConfigSetting('_repositories', $this->getRepositories()->toArray());
     }
 
     /**
-     * Use repository.
+     * Use the repository.
      *
      * @param Repository $repository
      * @param bool       $modifyCurrent
      */
     public function useRepository(Repository $repository, $modifyCurrent = false)
     {
-        if ($modifyCurrent) {
-            $file = Factory::getComposerFile();
-            $configFile = new JsonFile($file);
-            if (!$configFile->exists()) {
-                throw new \RuntimeException('Composer.json is not exists');
-            }
-            $configSource = new JsonConfigSource($configFile);
-        } else {
-            $configSource = static::$configSource;
-        }
+        $configSource = $modifyCurrent ? $this->getCurrentConfigSource() : static::$configSource;
         $configSource->addRepository('packagist', [
             'type' => 'composer',
             'url' => $repository->getUrl(),
         ]);
+    }
+
+    /**
+     * Get the project config source.
+     *
+     * @return ConfigSourceInterface|JsonConfigSource
+     */
+    protected function getCurrentConfigSource()
+    {
+        if (static::$currentConfigSource) {
+            return static::$currentConfigSource;
+        }
+        $file = Factory::getComposerFile();
+        $configFile = new JsonFile($file);
+        if (!$configFile->exists()) {
+            throw new \RuntimeException('Composer.json is not exists');
+        }
+        return static::$currentConfigSource = new JsonConfigSource($configFile);
     }
 
     /**

@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class RemoveCommand extends Command
 {
@@ -34,10 +35,10 @@ class RemoveCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $style = new SymfonyStyle($input, $output);
         $repositoryName = $input->getArgument('repository-name');
         //auto select
         if (is_null($repositoryName)) {
-            $helper = $this->getHelper('question');
             $question = new ChoiceQuestion(
                 'Please select repository your want to remove',
                 array_map(function (Repository $repository) {
@@ -45,11 +46,11 @@ class RemoveCommand extends Command
                 }, $this->repositoryManager->getRepositories()->all())
             );
             $question->setErrorMessage('repository %s is invalid.');
-            $repositoryName = $helper->ask($input, $output, $question);
+            $repositoryName = $style->askQuestion($question);
         }
-        //Remove registry & dump to config file
+        //Remove repository & dump to config file
         $this->repositoryManager->removeRepository($repositoryName);
 
-        $output->writeln("<info>Remove registry [{$repositoryName}] success</info>");
+        $style->success("Remove the repository [{$repositoryName}] success");
     }
 }

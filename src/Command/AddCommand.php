@@ -14,6 +14,7 @@ namespace Slince\Crm\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class AddCommand extends Command
 {
@@ -38,6 +39,7 @@ class AddCommand extends Command
         //Add repository & dump to config file
         $this->repositoryManager->addRepository($repositoryName, $repositoryUrl);
 
-        $output->writeln("<info>Add repository [{$repositoryName}] success</info>");
+        $style = new SymfonyStyle($input, $output);
+        $style->success("Add the repository [{$repositoryName}] success");
     }
 }

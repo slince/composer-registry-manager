@@ -17,6 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class UseCommand extends Command
 {
@@ -37,10 +38,10 @@ class UseCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $style = new SymfonyStyle($input, $output);
         $repositoryName = $input->getArgument('repository-name');
         //auto select
         if (is_null($repositoryName)) {
-            $helper = $this->getHelper('question');
             $question = new ChoiceQuestion(
                 'Please select your favorite repository (defaults to composer)',
                 array_map(function (Repository $repository) {
@@ -48,14 +49,14 @@ class UseCommand extends Command
                 }, $this->repositoryManager->getRepositories()->all()),
                 0
             );
-            $question->setErrorMessage('repository %s is invalid.');
-            $repositoryName = $helper->ask($input, $output, $question);
+            $question->setErrorMessage('The repository %s is invalid.');
+            $repositoryName = $style->askQuestion($question);
         }
 
-        $repository = $this->repositoryManager->getRepositories()->findByName($repositoryName);
+        $repository = $this->repositoryManager->getRepositories()->search($repositoryName);
 
         $this->repositoryManager->useRepository($repository, $input->getOption('current'));
 
-        $output->writeln("<info>Use repository [{$repositoryName}] success</info>");
+        $style->success("Use the repository [{$repositoryName}] success");
     }
 }

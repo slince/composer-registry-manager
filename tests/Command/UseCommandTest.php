@@ -7,6 +7,7 @@ use Slince\Crm\Command\UseCommand;
 use Slince\Crm\ConfigPath;
 use Slince\Crm\RepositoryManager;
 use Slince\Crm\Tests\Stub\RepositoryManagerStub;
+use Slince\Crm\Utils;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class UseCommandTest extends CommandTestCase
@@ -27,7 +28,7 @@ class UseCommandTest extends CommandTestCase
     public function testExecuteForCurrent()
     {
         $manager = new RepositoryManagerStub();
-        $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
+        $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
         $this->runCommandTester(new AddCommand($manager), [
             'repository-name' => 'bar',
             'repository-url' => 'http://bar.com',
@@ -71,13 +72,13 @@ class UseCommandTest extends CommandTestCase
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
         $this->assertContains('Please select your favorite repository', $display);
-        $this->assertContains('Use repository [phpcomposer] success', $display);
+        $this->assertContains('Use the repository [phpcomposer] success', $display);
     }
 
     protected function createCommandTester()
     {
         $manager = new RepositoryManagerStub();
-        $manager->readRegistriesFromFile(ConfigPath::getDefaultConfigFile());
+        $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
         $command = new UseCommand($manager);
         $command->setApplication(new ProxyApplication([]));
         return new CommandTester($command);
