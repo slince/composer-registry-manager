@@ -147,6 +147,9 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     public function removeRepository($name)
     {
         $repository = $this->getRepositories()->search($name);
+        if (null === $repository) {
+            throw new \InvalidArgumentException(sprintf('Cannot find the repository %s', $name));
+        }
         $this->getRepositories()->remove($repository);
         static::$configSource->addConfigSetting('_repositories', $this->getRepositories()->toArray());
     }
