@@ -23,16 +23,14 @@ $ composer global require slince/composer-registry-manager
 ```bash
 $ composer repo:ls
 
- --- --------------- ------------------------------------------------
-      composer        https://packagist.org
-      phpcomposer     https://packagist.phpcomposer.com
-      aliyun          https://mirrors.aliyun.com/composer
-      tencent         https://mirrors.cloud.tencent.com/composer
-      huawei          https://mirrors.huaweicloud.com/repository/php
-      laravel-china   https://packagist.laravel-china.org
-  *   cnpkg           https://php.cnpkg.org
-      sjtug           https://packagist.mirrors.sjtug.sjtu.edu.cn
- --- --------------- ------------------------------------------------
+ --- ---------- ------------------------------------------------
+      composer   https://packagist.org
+  *   aliyun     https://mirrors.aliyun.com/composer
+      tencent    https://mirrors.cloud.tencent.com/composer
+      huawei     https://mirrors.huaweicloud.com/repository/php
+      cnpkg      https://php.cnpkg.org
+      sjtug      https://packagist.mirrors.sjtug.sjtu.edu.cn
+ --- ---------- ------------------------------------------------
 ```
 标“*”表示当前正在使用的源;
 
@@ -43,19 +41,17 @@ $ composer repo:use
 
 Please select your favorite repository (defaults to composer) [composer]:
   [0] composer
-  [1] phpcomposer
-  [2] aliyun
-  [3] tencent
-  [4] huawei
-  [5] laravel-china
-  [6] cnpkg
-  [7] sjtug
+  [1] aliyun
+  [2] tencent
+  [3] huawei
+  [4] cnpkg
+  [5] sjtug
 >
 ```
 你也可以直接追加镜像名称来跳过选择
 
 ```bash
-$ composer repo:use phpcomposer
+$ composer repo:use aliyun
 ```
 
 添加选项 `--current/-c` 为当前项目切换源，默认是修改全局的源。
