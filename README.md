@@ -24,16 +24,14 @@ $ composer global require slince/composer-registry-manager ^2.0
 ```bash
 $ composer repo:ls
 
- --- --------------- ------------------------------------------------
-      composer        https://packagist.org
-      phpcomposer     https://packagist.phpcomposer.com
-      aliyun          https://mirrors.aliyun.com/composer
-      tencent         https://mirrors.cloud.tencent.com/composer
-      huawei          https://mirrors.huaweicloud.com/repository/php
-      laravel-china   https://packagist.laravel-china.org
-  *   cnpkg           https://php.cnpkg.org
-      sjtug           https://packagist.mirrors.sjtug.sjtu.edu.cn
- --- --------------- ------------------------------------------------
+ --- ---------- ------------------------------------------------
+      composer   https://packagist.org
+  *   aliyun     https://mirrors.aliyun.com/composer
+      tencent    https://mirrors.cloud.tencent.com/composer
+      huawei     https://mirrors.huaweicloud.com/repository/php
+      cnpkg      https://php.cnpkg.org
+      sjtug      https://packagist.mirrors.sjtug.sjtu.edu.cn
+ --- ---------- ------------------------------------------------
 ```
 
 ### Switch repository
@@ -43,19 +41,17 @@ $ composer repo:use
 
 Please select your favorite repository (defaults to composer) [composer]:
   [0] composer
-  [1] phpcomposer
-  [2] aliyun
-  [3] tencent
-  [4] huawei
-  [5] laravel-china
-  [6] cnpkg
-  [7] sjtug
+  [1] aliyun
+  [2] tencent
+  [3] huawei
+  [4] cnpkg
+  [5] sjtug
 >
 ```
 You can also skip selection by giving repository name.
 
 ```bash
-$ composer repo:use phpcomposer
+$ composer repo:use aliyun
 ```
 Add the option `--current/-c` for the current project.
 
