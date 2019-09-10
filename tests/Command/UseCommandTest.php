@@ -70,7 +70,7 @@ class UseCommandTest extends CommandTestCase
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
         $this->assertContains('Please select your favorite repository', $display);
-        $this->assertContains('Use the repository [phpcomposer] success', $display);
+        $this->assertContains('Use the repository [aliyun] success', $display);
     }
 
     protected function createCommandTester()
