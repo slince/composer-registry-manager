@@ -1,26 +1,62 @@
 [
     {
         "name": "composer",
+        "Location": "Europe, Canada and Singapore",
         "url": "https://packagist.org"
     },
     {
         "name": "aliyun",
+        "Location": "China",
         "url": "https://mirrors.aliyun.com/composer"
     },
     {
         "name": "tencent",
+        "Location": "China",
         "url": "https://mirrors.cloud.tencent.com/composer"
     },
     {
         "name": "huawei",
+        "Location": "China",
         "url": "https://mirrors.huaweicloud.com/repository/php"
     },
     {
         "name": "cnpkg",
+        "Location": "China",
         "url": "https://php.cnpkg.org"
     },
     {
         "name": "sjtug",
+        "Location": "China",
         "url": "https://packagist.mirrors.sjtug.sjtu.edu.cn"
+    },
+    {
+        "name": "phpcomposer",
+        "Location": "China",
+        "url": "https://packagist.phpcomposer.com"
+    },
+    {
+        "name": "hiraku",
+        "Location": "Japan",
+        "url": "https://packagist.jp"
+    },
+    {
+        "name": "webysther",
+        "Location": "Brazil",
+        "url": "https://packagist.com.br"
+    },
+    {
+        "name": "solidworx",
+        "Location": "South Africa",
+        "url": "https://packagist.co.za"
+    },
+    {
+        "name": "indra gunawan",
+        "Location": "Indonesia",
+        "url": "https://packagist.phpindonesia.id"
+    },
+    {
+        "name": "india",
+        "Location": "varun sridharan.",
+        "url": "https://packagist.in"
     }
 ]
