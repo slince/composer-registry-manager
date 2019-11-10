@@ -35,6 +35,11 @@
         "url": "https://packagist.phpcomposer.com"
     },
     {
+        "name": "kkame",
+        "Location": "South Korea",
+        "url": "https://packagist.kr"
+    },
+    {
         "name": "hiraku",
         "Location": "Japan",
         "url": "https://packagist.jp"
