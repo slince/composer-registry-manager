@@ -40,12 +40,14 @@ class ListCommand extends Command
                     '<info>*</info>',
                     "<info>{$repository->getName()}</info>",
                     "<info>{$repository->getUrl()}</info>",
+                    "<info>{$repository->getLocation()}</info>",
                 ];
             } else {
                 return [
                     '',
                     $repository->getName(),
                     $repository->getUrl(),
+                    $repository->getLocation()
                 ];
             }
         }, $this->repositoryManager->getRepositories()->all());

@@ -125,14 +125,15 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      *
      * @param string $name
      * @param string $url
-     *
+     * @param string $location
      * @return Repository
      */
-    public function addRepository($name, $url)
+    public function addRepository($name, $url, $location = null)
     {
         $repository = Repository::create([
             'name' => $name,
             'url' => $url,
+            'location' => $location
         ]);
         $this->getRepositories()->add($repository);
         static::$configSource->addConfigSetting('_repositories', $this->getRepositories()->toArray());

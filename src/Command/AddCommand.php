@@ -26,7 +26,8 @@ class AddCommand extends Command
         $this->setName('repo:add')
             ->setDescription('Creates a repository')
             ->addArgument('repository-name', InputArgument::REQUIRED, 'The repository name')
-            ->addArgument('repository-url', InputArgument::REQUIRED, 'The repository url');
+            ->addArgument('repository-url', InputArgument::REQUIRED, 'The repository url')
+            ->addArgument('repository-location', InputArgument::OPTIONAL, 'The repository location');
     }
 
     /**
@@ -36,8 +37,9 @@ class AddCommand extends Command
     {
         $repositoryName = $input->getArgument('repository-name');
         $repositoryUrl = $input->getArgument('repository-url');
+        $repositoryLocation = $input->getArgument('repository-location');
         //Add repository & dump to config file
-        $this->repositoryManager->addRepository($repositoryName, $repositoryUrl);
+        $this->repositoryManager->addRepository($repositoryName, $repositoryUrl, $repositoryLocation);
 
         $style = new SymfonyStyle($input, $output);
         $style->success("Add the repository [{$repositoryName}] success");

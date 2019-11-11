@@ -48,17 +48,13 @@ class RepositoryTest extends TestCase
         $repository =  Repository::create([
             'name' => 'foo',
             'url' => 'http://bar.com',
-            'homepage' => 'http://baz.com',
-            'author' => 'Steven'
+            'location' => 'China'
         ]);
-        $this->assertEquals('http://baz.com', $repository->getHomepage());
-        $this->assertEquals('Steven', $repository->getAuthor());
+        $this->assertEquals('China', $repository->getLocation());
+        $this->assertEquals('http://bar.com', $repository->getUrl());
 
-        $repository->setHomepage('http://bar.com');
-        $repository->setAuthor('Bob');
-
-        $this->assertEquals('http://bar.com', $repository->getHomepage());
-        $this->assertEquals('Bob', $repository->getAuthor());
+        $repository->setLocation('Russia');
+        $this->assertEquals('Russia', $repository->getLocation());
     }
 
     public function testToArray()
@@ -70,7 +66,6 @@ class RepositoryTest extends TestCase
         $repositoryData = $repository->toArray();
         $this->assertArrayHasKey('name', $repositoryData);
         $this->assertArrayHasKey('url', $repositoryData);
-        $this->assertArrayHasKey('homepage', $repositoryData);
-        $this->assertArrayHasKey('author', $repositoryData);
+        $this->assertArrayHasKey('location', $repositoryData);
     }
 }

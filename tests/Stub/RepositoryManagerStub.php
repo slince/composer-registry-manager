@@ -27,11 +27,12 @@ class RepositoryManagerStub extends RepositoryManager
         }
     }
 
-    public function addRepository($name, $url)
+    public function addRepository($name, $url, $location = null)
     {
         $repository = Repository::create([
             'name' => $name,
-            'url' => $url
+            'url' => $url,
+            'location' => $location
         ]);
         static::$repositories->add($repository);
         return $repository;

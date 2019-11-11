@@ -28,25 +28,17 @@ class Repository
     protected $url;
 
     /**
-     * Repository homepage.
+     * Repository location.
      *
      * @var string
      */
-    protected $homepage;
+    protected $location;
 
-    /**
-     * Repository author.
-     *
-     * @var string
-     */
-    protected $author;
-
-    public function __construct($name, $url, $homepage = null, $author = null)
+    public function __construct($name, $url, $location = null)
     {
         $this->name = $name;
         $this->url = $url;
-        $this->homepage = $homepage;
-        $this->author = $author;
+        $this->location = $location;
     }
 
     /**
@@ -63,22 +55,6 @@ class Repository
     public function setUrl($url)
     {
         $this->url = $url;
-    }
-
-    /**
-     * @param string $homepage
-     */
-    public function setHomepage($homepage)
-    {
-        $this->homepage = $homepage;
-    }
-
-    /**
-     * @param string $author
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
     }
 
     /**
@@ -100,17 +76,17 @@ class Repository
     /**
      * @return string
      */
-    public function getHomepage()
+    public function getLocation()
     {
-        return $this->homepage;
+        return $this->location;
     }
 
     /**
-     * @return string
+     * @param string $location
      */
-    public function getAuthor()
+    public function setLocation($location)
     {
-        return $this->author;
+        $this->location = $location;
     }
 
     /**
@@ -123,8 +99,7 @@ class Repository
         return [
             'name' => $this->name,
             'url' => $this->url,
-            'homepage' => $this->homepage,
-            'author' => $this->author,
+            'location' => $this->location
         ];
     }
 
@@ -142,9 +117,7 @@ class Repository
         if (empty($data['name']) || empty($data['url'])) {
             throw new \InvalidArgumentException('Repository data must contain key [name] and [url]');
         }
-        $homepage = isset($data['homepage']) ? $data['homepage'] : '';
-        $author = isset($data['author']) ? $data['author'] : '';
-
-        return new static($data['name'], $data['url'], $homepage, $author);
+        $data['location'] = isset($data['location']) ? $data['location'] : null;
+        return new static($data['name'], $data['url'], $data['location']);
     }
 }
