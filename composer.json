@@ -1,6 +1,6 @@
 {
     "name": "slince/composer-registry-manager",
-    "description": "Composer registry manager",
+    "description": "Composer mirrors manager",
     "keywords": ["composer repository", "composer mirror", "switch composer mirror", "composer", "mirror"],
     "type": "composer-plugin",
     "license": "MIT",
