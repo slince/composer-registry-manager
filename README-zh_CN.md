@@ -23,16 +23,29 @@ $ composer global require slince/composer-registry-manager
 ```bash
 $ composer repo:ls
 
- --- ---------- ------------------------------------------------
-      composer   https://packagist.org
-  *   aliyun     https://mirrors.aliyun.com/composer
-      tencent    https://mirrors.cloud.tencent.com/composer
-      huawei     https://mirrors.huaweicloud.com/repository/php
-      cnpkg      https://php.cnpkg.org
-      sjtug      https://packagist.mirrors.sjtug.sjtu.edu.cn
- --- ---------- ------------------------------------------------
+ --- ------------- ------------------------------------------------ ------------------------------
+      composer      https://packagist.org                            Europe, Canada and Singapore
+      aliyun        https://mirrors.aliyun.com/composer              China
+      tencent       https://mirrors.cloud.tencent.com/composer       China
+  *   huawei        https://mirrors.huaweicloud.com/repository/php   China
+      cnpkg         https://php.cnpkg.org                            China
+      sjtug         https://packagist.mirrors.sjtug.sjtu.edu.cn      China
+      phpcomposer   https://packagist.phpcomposer.com                China
+      kkame         https://packagist.kr                             South Korea
+      hiraku        https://packagist.jp                             Japan
+      webysther     https://packagist.com.br                         Brazil
+      solidworx     https://packagist.co.za                          South Africa
+      indra         https://packagist.phpindonesia.id                Indonesia
+      varun         https://packagist.in                             India
+ --- ------------- ------------------------------------------------ ------------------------------
 ```
 标“*”表示当前正在使用的源;
+
+你可以使用 `--location xx` 按地区过滤
+
+```bash
+$ composer repo:ls --location China
+```
 
 ### 切换镜像
 
@@ -40,12 +53,19 @@ $ composer repo:ls
 $ composer repo:use
 
 Please select your favorite repository (defaults to composer) [composer]:
-  [0] composer
-  [1] aliyun
-  [2] tencent
-  [3] huawei
-  [4] cnpkg
-  [5] sjtug
+  [0 ] composer
+  [1 ] aliyun
+  [2 ] tencent
+  [3 ] huawei
+  [4 ] cnpkg
+  [5 ] sjtug
+  [6 ] phpcomposer
+  [7 ] kkame
+  [8 ] hiraku
+  [9 ] webysther
+  [10] solidworx
+  [11] indra
+  [12] varun
 >
 ```
 你也可以直接追加镜像名称来跳过选择
@@ -55,6 +75,14 @@ $ composer repo:use aliyun
 ```
 
 添加选项 `--current/-c` 为当前项目切换源，默认是修改全局的源。
+
+### 重置命令
+
+如果你想丢弃所有自定义的镜像源，你可以使用下面命令：
+
+```bash
+$ composer repo:reset
+```
 
 ### 所有命令
 

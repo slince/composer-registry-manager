@@ -171,6 +171,14 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     }
 
     /**
+     * Remove custom repositories and and reset to default.
+     */
+    public function resetRepositories()
+    {
+        static::$configSource->removeConfigSetting('_repositories');
+    }
+
+    /**
      * Get the project config source.
      *
      * @return ConfigSourceInterface|JsonConfigSource
@@ -232,6 +240,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
             new Command\AddCommand($this),
             new Command\RemoveCommand($this),
             new Command\UseCommand($this),
+            new Command\ResetCommand($this),
         ];
     }
 }

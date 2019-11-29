@@ -24,14 +24,27 @@ $ composer global require slince/composer-registry-manager ^2.0
 ```bash
 $ composer repo:ls
 
- --- ---------- ------------------------------------------------
-      composer   https://packagist.org
-  *   aliyun     https://mirrors.aliyun.com/composer
-      tencent    https://mirrors.cloud.tencent.com/composer
-      huawei     https://mirrors.huaweicloud.com/repository/php
-      cnpkg      https://php.cnpkg.org
-      sjtug      https://packagist.mirrors.sjtug.sjtu.edu.cn
- --- ---------- ------------------------------------------------
+ --- ------------- ------------------------------------------------ ------------------------------
+      composer      https://packagist.org                            Europe, Canada and Singapore
+      aliyun        https://mirrors.aliyun.com/composer              China
+      tencent       https://mirrors.cloud.tencent.com/composer       China
+  *   huawei        https://mirrors.huaweicloud.com/repository/php   China
+      cnpkg         https://php.cnpkg.org                            China
+      sjtug         https://packagist.mirrors.sjtug.sjtu.edu.cn      China
+      phpcomposer   https://packagist.phpcomposer.com                China
+      kkame         https://packagist.kr                             South Korea
+      hiraku        https://packagist.jp                             Japan
+      webysther     https://packagist.com.br                         Brazil
+      solidworx     https://packagist.co.za                          South Africa
+      indra         https://packagist.phpindonesia.id                Indonesia
+      varun         https://packagist.in                             India
+ --- ------------- ------------------------------------------------ ------------------------------
+```
+
+You can filter by location using `--location xx`
+
+```bash
+$ composer repo:ls --location China
 ```
 
 ### Switch repository
@@ -40,12 +53,19 @@ $ composer repo:ls
 $ composer repo:use
 
 Please select your favorite repository (defaults to composer) [composer]:
-  [0] composer
-  [1] aliyun
-  [2] tencent
-  [3] huawei
-  [4] cnpkg
-  [5] sjtug
+  [0 ] composer
+  [1 ] aliyun
+  [2 ] tencent
+  [3 ] huawei
+  [4 ] cnpkg
+  [5 ] sjtug
+  [6 ] phpcomposer
+  [7 ] kkame
+  [8 ] hiraku
+  [9 ] webysther
+  [10] solidworx
+  [11] indra
+  [12] varun
 >
 ```
 You can also skip selection by giving repository name.
@@ -54,6 +74,14 @@ You can also skip selection by giving repository name.
 $ composer repo:use aliyun
 ```
 Add the option `--current/-c` for the current project.
+
+### Reset command
+
+If you want to discard all custom mirrors, you can use the following command:
+
+```bash
+$ composer repo:reset
+```
 
 ### Available commands
 
