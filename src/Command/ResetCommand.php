@@ -36,5 +36,7 @@ class ResetCommand extends Command
             $this->repositoryManager->resetRepositories();
             $style->success('Successfully reset');
         }
+
+        return 0;
     }
 }
