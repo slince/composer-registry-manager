@@ -43,5 +43,7 @@ class AddCommand extends Command
 
         $style = new SymfonyStyle($input, $output);
         $style->success("Add the repository [{$repositoryName}] success");
+
+        return 0;
     }
 }

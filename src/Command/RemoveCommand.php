@@ -52,5 +52,7 @@ class RemoveCommand extends Command
         $this->repositoryManager->removeRepository($repositoryName);
 
         $style->success("Remove the repository [{$repositoryName}] success");
+
+        return 0;
     }
 }

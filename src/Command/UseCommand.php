@@ -58,5 +58,7 @@ class UseCommand extends Command
         $this->repositoryManager->useRepository($repository, $input->getOption('current'));
 
         $style->success("Use the repository [{$repositoryName}] successfully");
+
+        return 0;
     }
 }

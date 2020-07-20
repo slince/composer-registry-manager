@@ -60,6 +60,8 @@ EOF
             'raw_text' => $input->getOption('raw'),
             'namespace' => 'repo',
         ));
+
+        return 0;
     }
 
     /**

@@ -60,6 +60,8 @@ class ListCommand extends Command
 
         $style = new SymfonyStyle($input, $output);
         $style->table([], $rows);
+
+        return 0;
     }
 
     protected function filterRepositoriesByLocation($location)
