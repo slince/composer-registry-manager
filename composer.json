@@ -18,7 +18,7 @@
         "composer/composer": "^1.5 || ^2.0",
         "phpunit/phpunit": "^5.0|^6.0"
     },
-    "minimum-stability": "alpha",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Slince\\Crm\\": "./src"
