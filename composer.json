@@ -15,9 +15,10 @@
         "composer-plugin-api": "^1.1 || ^2.0"
     },
     "require-dev": {
-        "composer/composer": "^1.5",
+        "composer/composer": "^1.5 || ^2.0",
         "phpunit/phpunit": "^5.0|^6.0"
     },
+    "minimum-stability": "alpha",
     "autoload": {
         "psr-4": {
             "Slince\\Crm\\": "./src"
