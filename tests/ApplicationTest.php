@@ -2,7 +2,6 @@
 namespace Slince\Crm\Tests\Console;
 
 use PHPUnit\Framework\TestCase;
-use Slince\Crm\Application;
 use Slince\Crm\ProxyApplication;
 
 class ApplicationTest extends TestCase
