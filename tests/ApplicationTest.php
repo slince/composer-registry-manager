@@ -1,5 +1,5 @@
 <?php
-namespace Slince\Crm\Tests\Console;
+namespace Slince\Crm\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Slince\Crm\ProxyApplication;

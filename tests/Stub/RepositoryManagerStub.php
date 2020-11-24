@@ -1,4 +1,5 @@
 <?php
+
 namespace Slince\Crm\Tests\Stub;
 
 use Slince\Crm\Repository;

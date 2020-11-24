@@ -2,7 +2,6 @@
 namespace Slince\Crm\Tests;
 
 use PHPUnit\Framework\TestCase;
-use \InvalidArgumentException;
 use Slince\Crm\Repository;
 use Slince\Crm\RepositoryCollection;
 use Slince\Crm\Tests\Stub\RepositoryManagerStub;
