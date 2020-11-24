@@ -21,6 +21,6 @@ EOT;
     public function testExecute()
     {
         $manager = new RepositoryManagerStub();
-        $this->assertContains(static::$logo, $this->runCommandTester(new RepoCommand($manager), []));
+        $this->assertStringContainsString(static::$logo, $this->runCommandTester(new RepoCommand($manager), []));
     }
 }

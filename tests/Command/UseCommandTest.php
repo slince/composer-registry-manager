@@ -54,8 +54,8 @@ class UseCommandTest extends CommandTestCase
         $commandTester->setInputs([PHP_EOL]);
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
-        $this->assertContains('Please select your favorite repository', $display);
-        $this->assertContains('Use the repository [composer] success', $display);
+        $this->assertStringContainsString('Please select your favorite repository', $display);
+        $this->assertStringContainsString('Use the repository [composer] success', $display);
     }
 
     public function testExecuteWithoutArguments()
@@ -69,8 +69,8 @@ class UseCommandTest extends CommandTestCase
         $commandTester->setInputs([1]);
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
-        $this->assertContains('Please select your favorite repository', $display);
-        $this->assertContains('Use the repository [aliyun] success', $display);
+        $this->assertStringContainsString('Please select your favorite repository', $display);
+        $this->assertStringContainsString('Use the repository [aliyun] success', $display);
     }
 
     protected function createCommandTester()

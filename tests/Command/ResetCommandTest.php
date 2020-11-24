@@ -23,7 +23,7 @@ class ResetCommandTest extends CommandTestCase
         $commandTester->setInputs(['y']);
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
-        $this->assertContains('This command will remove custom repositories. Are you sure to do this', $display);
-        $this->assertContains('Successfully reset', $display);
+        $this->assertStringContainsString('This command will remove custom repositories. Are you sure to do this', $display);
+        $this->assertStringContainsString('Successfully reset', $display);
     }
 }

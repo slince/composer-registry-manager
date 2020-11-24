@@ -10,7 +10,7 @@ class ApplicationTest extends TestCase
     {
         $application = new ProxyApplication([]);
         $this->assertInstanceOf(\Symfony\Component\Console\Application::class, $application);
-        $this->assertContains('Composer Repository Manager', $application->getName());
-        $this->assertContains('Composer Repository Manager', $application->getHelp());
+        $this->assertStringContainsString('Composer Repository Manager', $application->getName());
+        $this->assertStringContainsString('Composer Repository Manager', $application->getHelp());
     }
 }

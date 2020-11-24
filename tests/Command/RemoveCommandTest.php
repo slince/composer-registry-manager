@@ -40,8 +40,8 @@ class RemoveCommandTest extends CommandTestCase
         $commandTester->setInputs([1]);
         $commandTester->execute([]);
         $display = $commandTester->getDisplay();
-        $this->assertContains('Please select repository your want to remove', $display);
-        $this->assertContains('Remove the repository [aliyun] success', $display);
+        $this->assertStringContainsString('Please select repository your want to remove', $display);
+        $this->assertStringContainsString('Remove the repository [aliyun] success', $display);
     }
 
 
