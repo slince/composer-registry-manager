@@ -11,7 +11,9 @@ class AddCommandTest extends CommandTestCase
     public function testExecute()
     {
         $manager = new RepositoryManagerStub();
-        $this->assertMatchesRegularExpression('#success#', $this->runCommandTester(new AddCommand($manager), [
+        $method = method_exists($this, 'assertMatchesRegularExpression')
+            ? 'assertMatchesRegularExpression' : 'assertRegExp';
+        $this->$method('#success#', $this->runCommandTester(new AddCommand($manager), [
             'repository-name' => 'foo',
             'repository-url' => 'http://foo.com',
         ]));
