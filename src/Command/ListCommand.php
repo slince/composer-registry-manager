@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the slince/composer-registry-manager package.
  *
@@ -32,7 +34,7 @@ class ListCommand extends Command
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // filter by location
         $location = $input->getOption('location');
@@ -64,7 +66,7 @@ class ListCommand extends Command
         return 0;
     }
 
-    protected function filterRepositoriesByLocation($location)
+    protected function filterRepositoriesByLocation(string $location): array
     {
         return array_filter(iterator_to_array($this->repositoryManager->getRepositories()), function(Repository $repository) use ($location){
             return stripos($repository->getLocation(), $location) !== false;

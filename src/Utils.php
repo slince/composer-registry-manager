@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the slince/composer-registry-manager package.
  *
@@ -19,7 +21,7 @@ final class Utils
      *
      * @return array
      */
-    public static function readJsonFile($file)
+    public static function readJsonFile(string $file): array
     {
         if (!is_file($file)) {
             throw new \InvalidArgumentException(sprintf('File [%s] does not exists', $file));
@@ -37,7 +39,7 @@ final class Utils
      *
      * @return string
      */
-    public static function getDefaultConfigFile()
+    public static function getDefaultConfigFile(): string
     {
         return __DIR__.'/../crm.default.json';
     }

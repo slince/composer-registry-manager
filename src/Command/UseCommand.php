@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the slince/composer-repository-manager package.
  *
@@ -36,7 +38,7 @@ class UseCommand extends Command
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $style = new SymfonyStyle($input, $output);
         $repositoryName = $input->getArgument('repository-name');

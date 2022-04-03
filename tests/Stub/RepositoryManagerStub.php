@@ -19,16 +19,16 @@ class RepositoryManagerStub extends RepositoryManager
         static::$repositories = new RepositoryCollection();
     }
 
-    public function useRepository(Repository $repository, $isCurrent = false)
+    public function useRepository(Repository $repository, bool $modifyCurrent = false)
     {
-        if ($isCurrent) {
+        if ($modifyCurrent) {
             $this->currentRepository = $repository;
         } else {
             $this->repository = $repository;
         }
     }
 
-    public function addRepository($name, $url, $location = null)
+    public function addRepository(string $name, string $url, string $location = null): Repository
     {
         $repository = Repository::create([
             'name' => $name,
@@ -39,7 +39,7 @@ class RepositoryManagerStub extends RepositoryManager
         return $repository;
     }
 
-    public function getRepositories()
+    public function getRepositories(): RepositoryCollection
     {
         return static::$repositories;
     }
@@ -54,7 +54,7 @@ class RepositoryManagerStub extends RepositoryManager
         static::$repositories = RepositoryCollection::fromArray(Utils::readJsonFile($file));
     }
 
-    public function removeRepository($name)
+    public function removeRepository(string $name)
     {
         static::$repositories->remove(static::$repositories->search($name));
     }
@@ -64,7 +64,7 @@ class RepositoryManagerStub extends RepositoryManager
         static::$repositories = new RepositoryCollection();
     }
 
-    public function getCurrentComposerRepository()
+    public function getCurrentComposerRepository(): Repository
     {
         return $this->repository;
     }

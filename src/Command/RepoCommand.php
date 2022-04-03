@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the slince/composer-registry-manager package.
  *
@@ -52,7 +54,7 @@ EOF
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = new DescriptorHelper();
         $helper->describe($output, new ProxyApplication($this->repositoryManager->getCommands()), array(
@@ -64,10 +66,7 @@ EOF
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    private function createDefinition()
+    private function createDefinition(): InputDefinition
     {
         return new InputDefinition(array(
             new InputArgument('namespace', InputArgument::OPTIONAL, 'The namespace name'),

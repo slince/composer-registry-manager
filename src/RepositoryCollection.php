@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the slince/composer-registry-manager package.
  *
@@ -33,7 +35,7 @@ class RepositoryCollection implements \IteratorAggregate, \Countable
      *
      * @return Repository|null
      */
-    public function search($name)
+    public function search(string $name): ?Repository
     {
         $filtered = array_filter($this->repositories, function(Repository $repository) use ($name){
             return $repository->getName() === $name;
@@ -73,7 +75,7 @@ class RepositoryCollection implements \IteratorAggregate, \Countable
      *
      * @return boolean
      */
-    public function has(Repository $repository)
+    public function has(Repository $repository): bool
     {
         return array_search($repository, $this->repositories) !== false;
     }
@@ -83,7 +85,7 @@ class RepositoryCollection implements \IteratorAggregate, \Countable
      *
      * @return Repository[]
      */
-    public function all()
+    public function all(): array
     {
         return $this->repositories;
     }
@@ -93,7 +95,7 @@ class RepositoryCollection implements \IteratorAggregate, \Countable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return array_map(function (Repository $repository) {
             return $repository->toArray();
@@ -107,7 +109,7 @@ class RepositoryCollection implements \IteratorAggregate, \Countable
      *
      * @return static
      */
-    public static function fromArray($data)
+    public static function fromArray(array $data): RepositoryCollection
     {
         return new static(array_map(function ($repositoryData) {
             return Repository::create($repositoryData);
@@ -125,7 +127,7 @@ class RepositoryCollection implements \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         return count($this->repositories);
     }

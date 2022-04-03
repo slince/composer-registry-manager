@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the slince/composer-registry-manager package.
  *
@@ -44,7 +46,7 @@ class Repository
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -52,7 +54,7 @@ class Repository
     /**
      * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl(string $url)
     {
         $this->url = $url;
     }
@@ -60,7 +62,7 @@ class Repository
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -68,7 +70,7 @@ class Repository
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -76,7 +78,7 @@ class Repository
     /**
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): ?string
     {
         return $this->location;
     }
@@ -84,7 +86,7 @@ class Repository
     /**
      * @param string $location
      */
-    public function setLocation($location)
+    public function setLocation(string $location)
     {
         $this->location = $location;
     }
@@ -94,7 +96,7 @@ class Repository
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'name' => $this->name,
@@ -108,16 +110,16 @@ class Repository
      *
      * @param array $data
      *
-     * @throws \InvalidArgumentException
-     *
      * @return static
+     *@throws \InvalidArgumentException
+     *
      */
-    public static function create($data)
+    public static function create(array $data): Repository
     {
         if (empty($data['name']) || empty($data['url'])) {
             throw new \InvalidArgumentException('Repository data must contain key [name] and [url]');
         }
-        $data['location'] = isset($data['location']) ? $data['location'] : null;
+        $data['location'] = $data['location'] ?? null;
         return new static($data['name'], $data['url'], $data['location']);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the slince/composer-registry-manager package.
  *
@@ -42,7 +44,7 @@ EOT;
     /**
      * {@inheritdoc}
      */
-    public function getHelp()
+    public function getHelp(): string
     {
         return static::$logo.parent::getHelp();
     }
@@ -50,7 +52,7 @@ EOT;
     /**
      * {@inheritdoc}
      */
-    public function getDefaultCommands()
+    public function getDefaultCommands(): array
     {
         return array_merge(parent::getDefaultCommands(), $this->commands);
     }

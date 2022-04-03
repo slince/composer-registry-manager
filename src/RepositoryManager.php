@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the slince/composer-registry-manager package.
  *
@@ -73,7 +75,6 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      */
     public function deactivate(Composer $composer, IOInterface $io)
     {
-        // TODO: Implement deactivate() method.
     }
 
     /**
@@ -81,7 +82,6 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      */
     public function uninstall(Composer $composer, IOInterface $io)
     {
-        // TODO: Implement uninstall() method.
     }
 
     /**
@@ -90,7 +90,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      * @param string $file
      * @throws
      */
-    protected function prepareConfigSource($file)
+    protected function prepareConfigSource(string $file)
     {
         $configFile = new JsonFile($file);
         if (!$configFile->exists()) {
@@ -107,7 +107,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      *
      * @return RepositoryCollection
      */
-    public function getRepositories()
+    public function getRepositories(): RepositoryCollection
     {
         if (static::$repositoriesLoaded) {
             return static::$repositories;
@@ -122,7 +122,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      *
      * @return RepositoryCollection
      */
-    protected function loadRepositories()
+    protected function loadRepositories(): RepositoryCollection
     {
         $config = static::$configFile->read();
         $repositories = [];
@@ -141,10 +141,10 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      *
      * @param string $name
      * @param string $url
-     * @param string $location
+     * @param string|null $location
      * @return Repository
      */
-    public function addRepository($name, $url, $location = null)
+    public function addRepository(string $name, string $url, string $location = null): Repository
     {
         $repository = Repository::create([
             'name' => $name,
@@ -161,7 +161,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      *
      * @param string $name
      */
-    public function removeRepository($name)
+    public function removeRepository(string $name)
     {
         $repository = $this->getRepositories()->search($name);
         if (null === $repository) {
@@ -175,9 +175,9 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      * Use the repository.
      *
      * @param Repository $repository
-     * @param bool       $modifyCurrent
+     * @param bool $modifyCurrent
      */
-    public function useRepository(Repository $repository, $modifyCurrent = false)
+    public function useRepository(Repository $repository, bool $modifyCurrent = false)
     {
         $configSource = $modifyCurrent ? $this->getCurrentConfigSource() : static::$configSource;
         $configSource->addRepository('packagist', [
@@ -187,7 +187,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     }
 
     /**
-     * Remove custom repositories and and reset to default.
+     * Remove custom repositories and reset to default.
      */
     public function resetRepositories()
     {
@@ -217,7 +217,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      *
      * @return Repository
      */
-    public function getCurrentComposerRepository()
+    public function getCurrentComposerRepository(): Repository
     {
         $composerRepos = array_filter(static::$composer->getConfig()->getRepositories(), function($repo){
             return 'composer' === $repo['type'];
@@ -238,7 +238,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     /**
      * {@inheritdoc}
      */
-    public function getCapabilities()
+    public function getCapabilities(): array
     {
         return [
             CommandProvider::class => __CLASS__,
@@ -248,7 +248,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     /**
      * {@inheritdoc}
      */
-    public function getCommands()
+    public function getCommands(): array
     {
         return [
             new Command\RepoCommand($this),

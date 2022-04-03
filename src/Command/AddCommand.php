@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the slince/composer-repository-manager package.
  *
@@ -33,7 +35,7 @@ class AddCommand extends Command
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $repositoryName = $input->getArgument('repository-name');
         $repositoryUrl = $input->getArgument('repository-url');
