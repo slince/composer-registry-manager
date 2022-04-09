@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Slince\Crm;
 
 use Composer\Composer;
-use Composer\Config\ConfigSourceInterface;
 use Composer\Config\JsonConfigSource;
 use Composer\Factory;
 use Composer\IO\IOInterface;
@@ -23,42 +22,43 @@ use Composer\Plugin\Capability\CommandProvider;
 use Composer\Plugin\Capable;
 use Composer\Plugin\PluginInterface;
 use Composer\Util\Silencer;
+use Seld\JsonLint\ParsingException;
 
 class RepositoryManager implements PluginInterface, Capable, CommandProvider
 {
     /**
      * @var Composer
      */
-    protected static $composer;
+    protected static Composer $composer;
 
     /**
      * @var JsonFile
      */
-    protected static $configFile;
+    protected static JsonFile $configFile;
 
     /**
      * Global config file source.
      *
-     * @var ConfigSourceInterface
+     * @var JsonConfigSource
      */
-    protected static $configSource;
+    protected static JsonConfigSource $configSource;
 
     /**
      * Config file source of the project.
      *
-     * @var ConfigSourceInterface
+     * @var JsonConfigSource|null
      */
-    protected static $currentConfigSource;
+    protected static ?JsonConfigSource $currentConfigSource = null;
 
     /**
      * @var RepositoryCollection
      */
-    protected static $repositories;
+    protected static RepositoryCollection $repositories;
 
     /**
      * @var bool
      */
-    protected static $repositoriesLoaded = false;
+    protected static bool $repositoriesLoaded = false;
 
     /**
      * {@inheritdoc}
@@ -88,7 +88,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      * Initialize the config file.
      *
      * @param string $file
-     * @throws
+     * @throws \Exception
      */
     protected function prepareConfigSource(string $file)
     {
@@ -106,6 +106,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      * Gets all repositories.
      *
      * @return RepositoryCollection
+     * @throws ParsingException
      */
     public function getRepositories(): RepositoryCollection
     {
@@ -121,6 +122,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      * Load repository from config file.
      *
      * @return RepositoryCollection
+     * @throws ParsingException
      */
     protected function loadRepositories(): RepositoryCollection
     {
@@ -143,6 +145,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      * @param string $url
      * @param string|null $location
      * @return Repository
+     * @throws ParsingException
      */
     public function addRepository(string $name, string $url, string $location = null): Repository
     {
@@ -160,6 +163,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      * Remove a repository by the name.
      *
      * @param string $name
+     * @throws ParsingException
      */
     public function removeRepository(string $name)
     {
@@ -197,9 +201,9 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
     /**
      * Get the project config source.
      *
-     * @return ConfigSourceInterface|JsonConfigSource
+     * @return JsonConfigSource
      */
-    protected function getCurrentConfigSource()
+    protected function getCurrentConfigSource(): JsonConfigSource
     {
         if (static::$currentConfigSource) {
             return static::$currentConfigSource;
@@ -207,7 +211,7 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
         $file = Factory::getComposerFile();
         $configFile = new JsonFile($file);
         if (!$configFile->exists()) {
-            throw new \RuntimeException('Composer.json is not exists');
+            throw new \RuntimeException('Composer.json is not exists in current dir');
         }
         return static::$currentConfigSource = new JsonConfigSource($configFile);
     }
@@ -216,15 +220,14 @@ class RepositoryManager implements PluginInterface, Capable, CommandProvider
      * Gets current composer repository.
      *
      * @return Repository
+     * @throws ParsingException
      */
     public function getCurrentComposerRepository(): Repository
     {
-        $composerRepos = array_filter(static::$composer->getConfig()->getRepositories(), function($repo){
-            return 'composer' === $repo['type'];
-        });
+        $composerRepos = array_filter(static::$composer->getConfig()->getRepositories(), fn($repo) => 'composer' === $repo['type']);
         $packagistRepoUrl = reset($composerRepos)['url'];
         foreach ($this->getRepositories() as $repository) {
-            if (0 == strcasecmp($repository->getUrl(), $packagistRepoUrl)) {
+            if (0 === strcasecmp($repository->getUrl(), $packagistRepoUrl)) {
                 return $repository;
             }
         }

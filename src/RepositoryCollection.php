@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Slince\Crm;
 
-class RepositoryCollection implements \IteratorAggregate, \Countable
+final class RepositoryCollection implements \IteratorAggregate, \Countable
 {
     /**
      * @var Repository[]
      */
-    protected $repositories = [];
+    protected array $repositories = [];
 
     /**
      * @param array $repositories
@@ -111,15 +111,13 @@ class RepositoryCollection implements \IteratorAggregate, \Countable
      */
     public static function fromArray(array $data): RepositoryCollection
     {
-        return new static(array_map(function ($repositoryData) {
-            return Repository::create($repositoryData);
-        }, $data));
+        return new RepositoryCollection(array_map(fn($repositoryData) => Repository::create($repositoryData), $data));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->repositories);
     }

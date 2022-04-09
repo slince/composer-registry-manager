@@ -22,7 +22,7 @@ class ProxyApplication extends Application
      */
     const VERSION = '2.4.0';
 
-    protected static $logo = <<<EOT
+    protected static string $logo = <<<EOT
  _____   _____        ___  ___  
 /  ___| |  _  \      /   |/   | 
 | |     | |_| |     / /|   /| | 
@@ -33,9 +33,9 @@ class ProxyApplication extends Application
 
 EOT;
 
-    protected $commands;
+    protected array $commands;
 
-    public function __construct($commands)
+    public function __construct(array $commands)
     {
         $this->commands = $commands;
         parent::__construct('Composer Repository Manager', static::VERSION);

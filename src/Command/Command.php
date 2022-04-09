@@ -21,9 +21,9 @@ class Command extends BaseCommand
     /**
      * @var RepositoryManager
      */
-    protected $repositoryManager;
+    protected RepositoryManager $repositoryManager;
 
-    public function __construct(RepositoryManager $repositoryManager, $name = null)
+    public function __construct(RepositoryManager $repositoryManager, ?string $name = null)
     {
         $this->repositoryManager = $repositoryManager;
         parent::__construct($name);

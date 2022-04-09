@@ -13,30 +13,30 @@ declare(strict_types=1);
 
 namespace Slince\Crm;
 
-class Repository
+final class Repository
 {
     /**
      * Repository name.
      *
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * Repository url.
      *
      * @var string
      */
-    protected $url;
+    protected string $url;
 
     /**
      * Repository location.
      *
-     * @var string
+     * @var string|null
      */
-    protected $location;
+    protected ?string $location;
 
-    public function __construct($name, $url, $location = null)
+    public function __construct(string $name, string $url, ?string $location = null)
     {
         $this->name = $name;
         $this->url = $url;
@@ -76,7 +76,7 @@ class Repository
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLocation(): ?string
     {
@@ -111,7 +111,7 @@ class Repository
      * @param array $data
      *
      * @return static
-     *@throws \InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      */
     public static function create(array $data): Repository
@@ -120,6 +120,6 @@ class Repository
             throw new \InvalidArgumentException('Repository data must contain key [name] and [url]');
         }
         $data['location'] = $data['location'] ?? null;
-        return new static($data['name'], $data['url'], $data['location']);
+        return new static(...$data);
     }
 }

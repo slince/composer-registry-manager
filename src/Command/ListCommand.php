@@ -38,8 +38,10 @@ class ListCommand extends Command
     {
         // filter by location
         $location = $input->getOption('location');
-        $repositories = $location ? $this->filterRepositoriesByLocation($location)
+        $repositories = $location
+            ? $this->filterRepositoriesByLocation($location)
             : iterator_to_array($this->repositoryManager->getRepositories());
+
         //find all repository records
         $currentRepository = $this->repositoryManager->getCurrentComposerRepository();
         $rows = array_map(function (Repository $repository) use ($currentRepository) {
@@ -68,8 +70,8 @@ class ListCommand extends Command
 
     protected function filterRepositoriesByLocation(string $location): array
     {
-        return array_filter(iterator_to_array($this->repositoryManager->getRepositories()), function(Repository $repository) use ($location){
-            return stripos($repository->getLocation(), $location) !== false;
-        });
+        return array_filter(iterator_to_array($this->repositoryManager->getRepositories()),
+            fn(Repository $repository) => stripos($repository->getLocation(), $location) !== false
+        );
     }
 }
