@@ -28,4 +28,14 @@ class Command extends BaseCommand
         $this->repositoryManager = $repositoryManager;
         parent::__construct($name);
     }
+
+    /**
+     * Return the repo manager.
+     *
+     * @return RepositoryManager
+     */
+    public function getRepositoryManager(): RepositoryManager
+    {
+        return $this->repositoryManager;
+    }
 }

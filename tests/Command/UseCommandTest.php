@@ -13,11 +13,17 @@ class UseCommandTest extends CommandTestCase
     public function testExecute()
     {
         $manager = new RepositoryManagerStub();
-        $this->runCommandTester(new AddCommand($manager), [
+        $addCommand = $this->getMockBuilder(AddCommand::class)->onlyMethods(['getApplication'])
+            ->setConstructorArgs([$manager])
+            ->getMock();
+        $this->runCommandTester($addCommand, [
             'repository-name' => 'foo',
             'repository-url' => 'http://foo.com',
         ]);
-        $this->runCommandTester(new UseCommand($manager), [
+        $useCommand = $this->getMockBuilder(UseCommand::class)->onlyMethods(['getApplication'])
+            ->setConstructorArgs([$manager])
+            ->getMock();
+        $this->runCommandTester($useCommand, [
             'repository-name' => 'foo',
         ]);
         $this->assertEquals('http://foo.com', $manager->getCurrentRepository()->getUrl());
@@ -27,14 +33,23 @@ class UseCommandTest extends CommandTestCase
     {
         $manager = new RepositoryManagerStub();
         $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
-        $this->runCommandTester(new AddCommand($manager), [
+
+        $addCommand = $this->getMockBuilder(AddCommand::class)->onlyMethods(['getApplication'])
+            ->setConstructorArgs([$manager])
+            ->getMock();
+
+        $this->runCommandTester($addCommand, [
             'repository-name' => 'bar',
             'repository-url' => 'http://bar.com',
         ]);
-        $this->runCommandTester(new UseCommand($manager), [
+
+        $useCommand = $this->getMockBuilder(UseCommand::class)->onlyMethods(['getApplication'])
+            ->setConstructorArgs([$manager])
+            ->getMock();
+        $this->runCommandTester($useCommand, [
             'repository-name' => 'composer',
         ]);
-        $this->runCommandTester(new UseCommand($manager), [
+        $this->runCommandTester($useCommand, [
             'repository-name' => 'bar',
             '--current' => true
         ]);
@@ -77,7 +92,9 @@ class UseCommandTest extends CommandTestCase
     {
         $manager = new RepositoryManagerStub();
         $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
-        $command = new UseCommand($manager);
+        $command = $this->getMockBuilder(UseCommand::class)->onlyMethods(['getApplication'])
+            ->setConstructorArgs([$manager])
+            ->getMock();
         $command->setApplication(new ProxyApplication([]));
         return new CommandTester($command);
     }

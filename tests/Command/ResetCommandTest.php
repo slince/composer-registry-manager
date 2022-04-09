@@ -2,6 +2,7 @@
 namespace Slince\Crm\Tests\Command;
 
 use Slince\Crm\Command\ResetCommand;
+use Slince\Crm\Command\UseCommand;
 use Slince\Crm\ProxyApplication;
 use Slince\Crm\Tests\Stub\RepositoryManagerStub;
 use Slince\Crm\Utils;
@@ -13,7 +14,9 @@ class ResetCommandTest extends CommandTestCase
     {
         $manager = new RepositoryManagerStub();
         $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
-        $command = new ResetCommand($manager);
+        $command = $this->getMockBuilder(ResetCommand::class)->onlyMethods(['getApplication'])
+            ->setConstructorArgs([$manager])
+            ->getMock();
         $command->setApplication(new ProxyApplication([]));
         $commandTester = new CommandTester($command);
         //If the symfony/console version is less than 3.2, the test is not performed

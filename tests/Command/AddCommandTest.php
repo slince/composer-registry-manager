@@ -10,21 +10,17 @@ class AddCommandTest extends CommandTestCase
 {
     public function testExecute()
     {
-        $manager = new RepositoryManagerStub();
-        $method = method_exists($this, 'assertMatchesRegularExpression')
-            ? 'assertMatchesRegularExpression' : 'assertRegExp';
-        $this->$method('#success#', $this->runCommandTester(new AddCommand($manager), [
+        $this->assertMatchesRegularExpression('#success#', $this->runCommandTest(AddCommand::class, [
             'repository-name' => 'foo',
             'repository-url' => 'http://foo.com',
         ]));
-        $this->assertStringContainsString('http://foo.com', $this->runCommandTester(new ListCommand($manager), []));
+        $this->assertStringContainsString('http://foo.com', $this->runCommandTest(ListCommand::class, []));
     }
 
     public function testExecuteWithoutArgument()
     {
-        $manager = new RepositoryManagerStub();
         $this->expectException(RuntimeException::class);
-        $this->runCommandTester(new AddCommand($manager), [
+        $this->runCommandTest(AddCommand::class, [
             'repository-name' => 'foo',
         ]);
     }

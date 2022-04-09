@@ -4,6 +4,7 @@ namespace Slince\Crm\Tests\Command;
 use Slince\Crm\Command\AddCommand;
 use Slince\Crm\Command\ListCommand;
 use Slince\Crm\Command\RemoveCommand;
+use Slince\Crm\Command\ResetCommand;
 use Slince\Crm\ProxyApplication;
 use Slince\Crm\Tests\Stub\RepositoryManagerStub;
 use Slince\Crm\Utils;
@@ -15,6 +16,8 @@ class RemoveCommandTest extends CommandTestCase
     {
         $manager = new RepositoryManagerStub();
         $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
+
+
         $this->runCommandTester(new AddCommand($manager), [
             'repository-name' => 'foo',
             'repository-url' => 'http://foo.com',
@@ -49,7 +52,9 @@ class RemoveCommandTest extends CommandTestCase
     {
         $manager = new RepositoryManagerStub();
         $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
-        $command = new RemoveCommand($manager);
+        $command = $this->getMockBuilder(RemoveCommand::class)->onlyMethods(['getApplication'])
+            ->setConstructorArgs([$manager])
+            ->getMock();
         $command->setApplication(new ProxyApplication([]));
         return new CommandTester($command);
     }

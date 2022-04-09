@@ -9,8 +9,6 @@ class ListCommandTest extends CommandTestCase
 {
     public function testExecute()
     {
-        $manager = new RepositoryManagerStub();
-        $manager->readRegistriesFromFile(Utils::getDefaultConfigFile());
-        $this->assertStringContainsString('packagist.org', $this->runCommandTester(new ListCommand($manager), []));
+        $this->assertStringContainsString('packagist.org', $this->runCommandTest(ListCommand::class, []));
     }
 }
