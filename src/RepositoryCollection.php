@@ -77,7 +77,7 @@ final class RepositoryCollection implements \IteratorAggregate, \Countable
      */
     public function has(Repository $repository): bool
     {
-        return array_search($repository, $this->repositories) !== false;
+        return in_array($repository, $this->repositories);
     }
 
     /**
