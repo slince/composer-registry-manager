@@ -1,6 +1,6 @@
 # CRM - Composer Registry Manager
 
-[![Build Status](https://img.shields.io/github/workflow/status/slince/composer-registry-manager/test?style=flat-square)](https://github.com/slince/composer-registry-manager/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/slince/composer-registry-manager/test.yml?style=flat-square)](https://github.com/slince/composer-registry-manager/actions)
 [![Coverage Status](https://img.shields.io/codecov/c/github/slince/composer-registry-manager.svg?style=flat-square)](https://codecov.io/github/slince/composer-registry-manager)
 [![Total Downloads](https://img.shields.io/packagist/dt/slince/composer-registry-manager.svg?style=flat-square)](https://packagist.org/packages/slince/composer-registry-manager)
 [![Latest Stable Version](https://img.shields.io/packagist/v/slince/composer-registry-manager.svg?style=flat-square&label=stable)](https://packagist.org/packages/slince/composer-registry-manager)
